@@ -1,0 +1,347 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mata Produtora - Criando Histórias Visuais</title>
+    <link rel="stylesheet" href="styles.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+</head>
+<body>
+    <!-- Header/Navigation -->
+    <header class="header">
+        <nav class="navbar">
+            <div class="container">
+                <div class="nav-brand">
+                    <h2>🎬 MATA PRODUTORA</h2>
+                </div>
+                <ul class="nav-menu" id="nav-menu">
+                    <li><a href="#home">Início</a></li>
+                    <li><a href="#services">Serviços</a></li>
+                    <li><a href="#portfolio">Portfólio</a></li>
+                    <li><a href="#about">Sobre</a></li>
+                    <li><a href="#contact">Contato</a></li>
+                </ul>
+                <div class="hamburger" id="hamburger">
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                </div>
+            </div>
+        </nav>
+    </header>
+
+    <!-- Hero Section -->
+    <section id="home" class="hero">
+        <!-- Video Background -->
+        <div class="hero-video-bg">
+            <div class="video-overlay"></div>
+            <div class="video-placeholder-bg">
+                <!-- Background moderno sem dependência de vídeo externo -->
+                <div class="modern-background">
+                    <div class="bg-layer layer-1"></div>
+                    <div class="bg-layer layer-2"></div>
+                    <div class="bg-layer layer-3"></div>
+                    <div class="floating-elements">
+                        <div class="element element-1"></div>
+                        <div class="element element-2"></div>
+                        <div class="element element-3"></div>
+                        <div class="element element-4"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Hero Top Content -->
+        <div class="hero-top">
+            <div class="container">
+                <div class="hero-top-content">
+                    <div class="hero-logo">
+                        <div class="logo-placeholder">
+                            <h2>🎬 MATA</h2>
+                            <span>PRODUTORA</span>
+                        </div>
+                    </div>
+                    <div class="hero-main-title">
+                        <h1>
+                            Transformamos suas <span class="highlight">ideias</span> em<br>
+                            <span class="highlight">experiências visuais</span> marcantes
+                        </h1>
+                    </div>
+                    <div class="hero-top-spacer"></div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Hero Bottom Content -->
+        <div class="hero-bottom">
+            <div class="container">
+                <div class="hero-bottom-content">
+                    <p class="hero-description">
+                        Somos uma produtora especializada em criar conteúdo audiovisual 
+                        que conecta, emociona e gera resultados para sua marca.
+                    </p>
+                    <div class="hero-buttons">
+                        <a href="#contact" class="btn btn-primary">Começar Projeto</a>
+                        <a href="#portfolio" class="btn btn-secondary">Ver Portfólio</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Scroll Indicator -->
+        <div class="scroll-indicator">
+            <div class="scroll-arrow">
+                <i class="fas fa-chevron-down"></i>
+            </div>
+        </div>
+    </section>
+
+    <!-- Services Section -->
+    <section id="services" class="services">
+        <div class="container">
+            <div class="section-header">
+                <h2>Nossos Serviços</h2>
+                <p>Oferecemos soluções completas em produção audiovisual</p>
+            </div>
+            <div class="services-grid">
+                <div class="service-card">
+                    <div class="service-icon">
+                        <i class="fas fa-video"></i>
+                    </div>
+                    <h3>Vídeos Corporativos</h3>
+                    <p>Institucionais, treinamentos e comunicação interna que fortalecem sua marca.</p>
+                </div>
+                <div class="service-card">
+                    <div class="service-icon">
+                        <i class="fas fa-bullhorn"></i>
+                    </div>
+                    <h3>Marketing Digital</h3>
+                    <p>Conteúdo para redes sociais, campanhas e estratégias de engajamento.</p>
+                </div>
+                <div class="service-card">
+                    <div class="service-icon">
+                        <i class="fas fa-film"></i>
+                    </div>
+                    <h3>Documentários</h3>
+                    <p>Narrativas autênticas que contam histórias reais com impacto emocional.</p>
+                </div>
+                <div class="service-card">
+                    <div class="service-icon">
+                        <i class="fas fa-camera"></i>
+                    </div>
+                    <h3>Eventos</h3>
+                    <p>Cobertura completa de eventos corporativos, casamentos e celebrações.</p>
+                </div>
+                <div class="service-card">
+                    <div class="service-icon">
+                        <i class="fas fa-music"></i>
+                    </div>
+                    <h3>Videoclipes</h3>
+                    <p>Produção musical com conceitos criativos e execução profissional.</p>
+                </div>
+                <div class="service-card">
+                    <div class="service-icon">
+                        <i class="fas fa-edit"></i>
+                    </div>
+                    <h3>Pós-Produção</h3>
+                    <p>Edição, motion graphics e finalização com os mais altos padrões.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Portfolio Section -->
+    <section id="portfolio" class="portfolio">
+        <div class="container">
+            <div class="section-header">
+                <h2>Portfólio</h2>
+                <p>Alguns dos nossos trabalhos mais recentes</p>
+            </div>
+            <div class="portfolio-filters">
+                <button class="filter-btn active" data-filter="all">Todos</button>
+                <button class="filter-btn" data-filter="corporate">Corporativo</button>
+                <button class="filter-btn" data-filter="marketing">Marketing</button>
+                <button class="filter-btn" data-filter="events">Eventos</button>
+            </div>
+            <div class="portfolio-grid" id="portfolio-grid">
+                <div class="portfolio-item" data-category="corporate">
+                    <div class="portfolio-image">
+                        <div class="portfolio-placeholder">
+                            <i class="fas fa-play"></i>
+                        </div>
+                        <div class="portfolio-overlay">
+                            <h4>Vídeo Institucional - Tech Corp</h4>
+                            <p>Corporativo</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="portfolio-item" data-category="marketing">
+                    <div class="portfolio-image">
+                        <div class="portfolio-placeholder">
+                            <i class="fas fa-play"></i>
+                        </div>
+                        <div class="portfolio-overlay">
+                            <h4>Campanha Digital - Fashion Brand</h4>
+                            <p>Marketing</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="portfolio-item" data-category="events">
+                    <div class="portfolio-image">
+                        <div class="portfolio-placeholder">
+                            <i class="fas fa-play"></i>
+                        </div>
+                        <div class="portfolio-overlay">
+                            <h4>Cobertura - Evento Empresarial</h4>
+                            <p>Eventos</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="portfolio-item" data-category="corporate">
+                    <div class="portfolio-image">
+                        <div class="portfolio-placeholder">
+                            <i class="fas fa-play"></i>
+                        </div>
+                        <div class="portfolio-overlay">
+                            <h4>Treinamento Interno - StartUp</h4>
+                            <p>Corporativo</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="portfolio-item" data-category="marketing">
+                    <div class="portfolio-image">
+                        <div class="portfolio-placeholder">
+                            <i class="fas fa-play"></i>
+                        </div>
+                        <div class="portfolio-overlay">
+                            <h4>Social Media - Restaurante</h4>
+                            <p>Marketing</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="portfolio-item" data-category="events">
+                    <div class="portfolio-image">
+                        <div class="portfolio-placeholder">
+                            <i class="fas fa-play"></i>
+                        </div>
+                        <div class="portfolio-overlay">
+                            <h4>Casamento - Villa Exclusive</h4>
+                            <p>Eventos</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- About Section -->
+    <section id="about" class="about">
+        <div class="container">
+            <div class="about-content">
+                <div class="about-text">
+                    <h2>Nossa História</h2>
+                    <p>
+                        Fundada em 2018, a Mata Produtora nasceu da paixão por contar histórias 
+                        através de imagens. Com uma equipe criativa e técnica experiente, 
+                        desenvolvemos projetos que vão além das expectativas.
+                    </p>
+                    <p>
+                        Nossa abordagem combina criatividade, inovação tecnológica e um 
+                        profundo entendimento das necessidades de nossos clientes para 
+                        entregar resultados excepcionais.
+                    </p>
+                    <div class="stats">
+                        <div class="stat-item">
+                            <h3>150+</h3>
+                            <p>Projetos Entregues</p>
+                        </div>
+                        <div class="stat-item">
+                            <h3>50+</h3>
+                            <p>Clientes Satisfeitos</p>
+                        </div>
+                        <div class="stat-item">
+                            <h3>7</h3>
+                            <p>Anos de Experiência</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="about-image">
+                    <div class="image-placeholder">
+                        <i class="fas fa-users"></i>
+                        <span>Nossa Equipe</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Contact Section -->
+    <section id="contact" class="contact">
+        <div class="container">
+            <div class="section-header">
+                <h2>Vamos Conversar?</h2>
+                <p>Pronto para dar vida ao seu próximo projeto?</p>
+            </div>
+            <div class="contact-content">
+                <div class="contact-info">
+                    <div class="contact-item">
+                        <i class="fas fa-phone"></i>
+                        <div>
+                            <h4>Telefone</h4>
+                            <p>(11) 99999-9999</p>
+                        </div>
+                    </div>
+                    <div class="contact-item">
+                        <i class="fas fa-envelope"></i>
+                        <div>
+                            <h4>Email</h4>
+                            <p>contato@mataprodutora.com</p>
+                        </div>
+                    </div>
+                    <div class="contact-item">
+                        <i class="fas fa-map-marker-alt"></i>
+                        <div>
+                            <h4>Endereço</h4>
+                            <p>São Paulo, SP</p>
+                        </div>
+                    </div>
+                </div>
+                <form class="contact-form" id="contact-form">
+                    <div class="form-row">
+                        <input type="text" id="name" placeholder="Seu nome" required>
+                        <input type="email" id="email" placeholder="Seu email" required>
+                    </div>
+                    <input type="text" id="subject" placeholder="Assunto" required>
+                    <textarea id="message" placeholder="Sua mensagem" rows="5" required></textarea>
+                    <button type="submit" class="btn btn-primary">Enviar Mensagem</button>
+                </form>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-brand">
+                    <h3>🎬 MATA PRODUTORA</h3>
+                    <p>Criando experiências visuais marcantes</p>
+                </div>
+                <div class="footer-social">
+                    <a href="#"><i class="fab fa-instagram"></i></a>
+                    <a href="#"><i class="fab fa-youtube"></i></a>
+                    <a href="#"><i class="fab fa-linkedin"></i></a>
+                    <a href="#"><i class="fab fa-vimeo"></i></a>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2025 Mata Produtora. Todos os direitos reservados.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="script.js"></script>
+</body>
+</html>
