@@ -1,3 +1,7 @@
+// Variável global para o player do YouTube
+let youtubePlayer;
+let isYouTubeReady = false;
+
 // Aguarda o DOM carregar completamente
 document.addEventListener('DOMContentLoaded', function() {
     // Inicialização de todas as funcionalidades
@@ -9,7 +13,107 @@ document.addEventListener('DOMContentLoaded', function() {
     initHeaderScroll();
     initScrollIndicator();
     initHeroScrollEffects();
+    
+    // Inicializa YouTube se a API já estiver carregada
+    if (window.YT && window.YT.Player) {
+        onYouTubeIframeAPIReady();
+    }
 });
+
+// Função chamada quando a API do YouTube está pronta
+function onYouTubeIframeAPIReady() {
+    isYouTubeReady = true;
+    createYouTubePlayer();
+}
+
+// Cria o player do YouTube
+function createYouTubePlayer() {
+    try {
+        youtubePlayer = new YT.Player('youtube-player', {
+            videoId: 'VzvOj_QrcVU', // ID do vídeo do YouTube
+            playerVars: {
+                autoplay: 1,          // Reproduz automaticamente
+                mute: 1,             // Inicia mutado (necessário para autoplay)
+                loop: 1,             // Repete em loop
+                controls: 0,         // Remove controles
+                showinfo: 0,         // Remove informações
+                rel: 0,              // Remove vídeos relacionados
+                iv_load_policy: 3,   // Remove anotações
+                modestbranding: 1,   // Remove logo do YouTube
+                playsinline: 1,      // Para mobile
+                start: 0,            // Inicia do começo
+                playlist: 'VzvOj_QrcVU' // Necessário para loop funcionar
+            },
+            events: {
+                onReady: onPlayerReady,
+                onStateChange: onPlayerStateChange,
+                onError: onPlayerError
+            }
+        });
+    } catch (error) {
+        console.log('Erro ao criar player do YouTube:', error);
+        showFallbackBackground();
+    }
+}
+
+// Quando o player está pronto
+function onPlayerReady(event) {
+    console.log('YouTube player pronto');
+    event.target.playVideo();
+    
+    // Esconde o fallback
+    const fallback = document.getElementById('fallback-bg');
+    if (fallback) {
+        fallback.style.display = 'none';
+    }
+    
+    // Aplica estilos adicionais ao iframe
+    const iframe = document.querySelector('#youtube-player iframe');
+    if (iframe) {
+        iframe.style.pointerEvents = 'none';
+        iframe.style.position = 'absolute';
+        iframe.style.top = '0';
+        iframe.style.left = '0';
+        iframe.style.width = '100%';
+        iframe.style.height = '100%';
+    }
+}
+
+// Controla mudanças de estado do vídeo
+function onPlayerStateChange(event) {
+    // Se o vídeo parar, reinicia
+    if (event.data === YT.PlayerState.ENDED) {
+        event.target.playVideo();
+    }
+    
+    // Se pausar, continua
+    if (event.data === YT.PlayerState.PAUSED) {
+        event.target.playVideo();
+    }
+}
+
+// Se houver erro, mostra fallback
+function onPlayerError(event) {
+    console.log('Erro no YouTube player:', event.data);
+    showFallbackBackground();
+}
+
+// Mostra background de fallback
+function showFallbackBackground() {
+    const fallback = document.getElementById('fallback-bg');
+    const youtubeContainer = document.getElementById('youtube-player');
+    
+    if (fallback) {
+        fallback.style.display = 'block';
+    }
+    
+    if (youtubeContainer) {
+        youtubeContainer.style.display = 'none';
+    }
+}
+
+// Função para ser chamada globalmente quando a API carregar
+window.onYouTubeIframeAPIReady = onYouTubeIframeAPIReady;
 
 // Funcionalidade do Menu Mobile
 function initNavbar() {
@@ -555,19 +659,15 @@ function initHeroScrollEffects() {
             heroTop.style.transform = `translateY(${scrollY * 0.3}px) scale(${scale})`;
             heroTop.style.opacity = opacity;
             
-            // Intensifica o overlay do vídeo
+            // Intensifica o overlay do vídeo (mas mantém suave)
             videoOverlay.style.background = `linear-gradient(135deg, 
-                rgba(255, 107, 53, ${0.7 + scrollPercent * 0.3}) 0%, 
-                rgba(44, 62, 80, ${0.8 + scrollPercent * 0.2}) 100%)`;
+                rgba(255, 107, 53, ${0.25 + scrollPercent * 0.15}) 0%, 
+                rgba(44, 62, 80, ${0.35 + scrollPercent * 0.15}) 100%)`;
             
             // Move o bottom content para cima
             if (scrollPercent > 0.5) {
                 const bottomTransform = (scrollPercent - 0.5) * 2; // 0 to 1
                 heroBottom.style.transform = `translateY(${-bottomTransform * 50}px)`;
-                heroBottom.style.background = `linear-gradient(to bottom, 
-                    rgba(255, 255, 255, ${bottomTransform * 0.1}) 0%, 
-                    rgba(255, 255, 255, ${0.95 + bottomTransform * 0.05}) 50%, 
-                    rgba(255, 255, 255, 1) 100%)`;
             }
         }
     }, 16));

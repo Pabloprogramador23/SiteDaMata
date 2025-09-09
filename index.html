@@ -14,7 +14,7 @@
         <nav class="navbar">
             <div class="container">
                 <div class="nav-brand">
-                    <h2>🎬 MATA PRODUTORA</h2>
+                    <img src="assets/img/logo-1-notBG.png" alt="Mata Produtora - Filmes" class="nav-logo">
                 </div>
                 <ul class="nav-menu" id="nav-menu">
                     <li><a href="#home">Início</a></li>
@@ -38,8 +38,10 @@
         <div class="hero-video-bg">
             <div class="video-overlay"></div>
             <div class="video-placeholder-bg">
-                <!-- Background moderno sem dependência de vídeo externo -->
-                <div class="modern-background">
+                <!-- YouTube Video Background -->
+                <div id="youtube-player"></div>
+                <!-- Fallback para quando o YouTube não carregar -->
+                <div class="modern-background" id="fallback-bg">
                     <div class="bg-layer layer-1"></div>
                     <div class="bg-layer layer-2"></div>
                     <div class="bg-layer layer-3"></div>
@@ -59,8 +61,7 @@
                 <div class="hero-top-content">
                     <div class="hero-logo">
                         <div class="logo-placeholder">
-                            <h2>🎬 MATA</h2>
-                            <span>PRODUTORA</span>
+                            <img src="assets/img/logo-1-notBG.png" alt="Mata Produtora - Filmes" class="logo-image">
                         </div>
                     </div>
                     <div class="hero-main-title">
@@ -342,6 +343,8 @@
         </div>
     </footer>
 
+    <!-- YouTube API -->
+    <script src="https://www.youtube.com/iframe_api"></script>
     <script src="script.js"></script>
 </body>
 </html>
