@@ -6,24 +6,25 @@
 }
 
 :root {
-    /* --- Cores Principais --- */
-    --primary-color: #ff6b35;   /* Laranja Vibrante: para botões de ação (CTA), links e destaques. */
-    --secondary-color: #2c3e50; /* Azul Petróleo: para fundos de seções secundárias, ícones ou botões secundários. */
+    /* --- Cores Principais (Dark Mode) --- */
+    --primary-color: #ff7a50;   /* Laranja mais suave: para botões de ação (CTA), links e destaques. */
+    --secondary-color: #1a1a1a; /* Preto suave: para fundos de seções secundárias, cards e elementos. */
 
-    /* --- Tons de Texto e Fundo --- */
-    --heading-color: #333333;   /* Cinza Chumbo: para todos os títulos principais (H1, H2, H3). */
-    --text-color: #7A7A7A;      /* Cinza Principal: para o corpo do texto (parágrafos, descrições). */
-    --bg-color: #F4F4F4;        /* Branco Gelo: para o fundo principal da página. */
-    --light-color: #ffffff;     /* Branco Puro: para textos sobre fundos escuros (laranja, azul). */
+    /* --- Tons de Texto e Fundo (Dark Mode) --- */
+    --heading-color: #ffffff;   /* Branco puro: para todos os títulos principais (H1, H2, H3). */
+    --text-color: #d4d4d4;      /* Cinza claro: para o corpo do texto (parágrafos, descrições). */
+    --text-light: #cccccc;      /* Cinza mais claro: para textos secundários e descrições. */
+    --bg-color: #0d0d0d;        /* Preto profundo: para o fundo principal da página. */
+    --light-color: #1f1f1f;     /* Cinza escuro: para cards, seções e elementos de destaque. */
 
     /* ======================================== */
     /* ESTILOS GLOBAIS               */
     /* ======================================== */
 
     /* --- Efeitos e Transições --- */
-    --gradient: linear-gradient(135deg, #ff6b35 0%, #f7931e 100%);
-    --shadow: 0 10px 40px rgba(0, 0, 0, 0.1);
-    --shadow-hover: 0 20px 60px rgba(0, 0, 0, 0.2);
+    --gradient: linear-gradient(135deg, #ff7a50 0%, #ff9066 100%);
+    --shadow: 0 10px 40px rgba(0, 0, 0, 0.3);
+    --shadow-hover: 0 20px 60px rgba(0, 0, 0, 0.4);
     
     /* --- Layout --- */
     --border-radius: 12px;
@@ -34,6 +35,7 @@ body {
     font-family: 'Inter', sans-serif;
     line-height: 1.6;
     color: var(--text-color);
+    background-color: var(--bg-color);
     overflow-x: hidden;
 }
 
@@ -43,16 +45,22 @@ body {
     padding: 0 20px;
 }
 
+/* Estilos globais para títulos */
+h1, h2, h3, h4, h5, h6 {
+    color: var(--heading-color);
+}
+
 /* Header e Navigation */
 .header {
     position: fixed;
     top: 0;
     left: 0;
     right: 0;
-    background: rgba(255, 255, 255, 0.95);
+    background: rgba(13, 13, 13, 0.95);
     backdrop-filter: blur(20px);
     z-index: 1000;
     transition: var(--transition);
+    border-bottom: 1px solid rgba(255, 122, 80, 0.1);
 }
 
 .navbar {
@@ -139,6 +147,9 @@ body {
     flex-direction: column;
     overflow: hidden;
     z-index: 1;
+    /* Otimizações de performance */
+    will-change: transform;
+    contain: layout style paint;
 }
 
 /* Video Background */
@@ -149,6 +160,9 @@ body {
     width: 100%;
     height: 100%;
     z-index: -2;
+    /* Otimizações de performance */
+    will-change: transform;
+    transform: translateZ(0); /* Force hardware acceleration */
 }
 
 .video-overlay {
@@ -162,6 +176,9 @@ body {
         rgba(44, 62, 80, 0.35) 100%);
     z-index: 1;
     pointer-events: none;
+    /* Otimizações de performance */
+    will-change: background;
+    transform: translateZ(0); /* Force hardware acceleration */
 }
 
 .video-placeholder-bg {
@@ -352,6 +369,10 @@ body {
     padding-bottom: 60px;
     position: relative;
     z-index: 2;
+    /* Otimizações de performance */
+    will-change: transform, opacity;
+    backface-visibility: hidden;
+    transform: translateZ(0); /* Force hardware acceleration */
 }
 
 .hero-top-content {
@@ -373,13 +394,13 @@ body {
 }
 
 .logo-placeholder {
-    background: rgba(255, 255, 255, 0.75);
+    background: rgba(31, 31, 31, 0.85);
     backdrop-filter: blur(15px);
     padding: 2rem 3rem;
     border-radius: 20px;
     text-align: center;
-    box-shadow: 0 20px 60px rgba(0, 0, 0, 0.2);
-    border: 1px solid rgba(255, 255, 255, 0.3);
+    box-shadow: 0 20px 60px rgba(0, 0, 0, 0.4);
+    border: 1px solid rgba(255, 122, 80, 0.2);
     transition: var(--transition);
     transform: translateY(0);
     display: inline-block;
@@ -410,7 +431,7 @@ body {
 .logo-placeholder span {
     font-size: 0.9rem;
     font-weight: 600;
-    color: var(--secondary-color);
+    color: var(--text-color);
     letter-spacing: 2px;
     margin-top: 0.5rem;
     display: block;
@@ -438,7 +459,7 @@ body {
 }
 
 .hero-main-title .highlight {
-    background: linear-gradient(135deg, #ff6b35 0%, #f7931e 50%, #ffaa00 100%);
+    background: linear-gradient(135deg, #ff7a50 0%, #ff9066 50%, #ffab7a 100%);
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
     background-clip: text;
@@ -452,6 +473,9 @@ body {
     position: relative;
     z-index: 2;
     background: transparent;
+    /* Otimizações de performance */
+    will-change: transform;
+    transform: translateZ(0); /* Force hardware acceleration */
 }
 
 .hero-bottom-content {
@@ -498,7 +522,7 @@ body {
     display: flex;
     justify-content: center;
     align-items: center;
-    color: rgba(255, 255, 255, 0.8);
+    color: var(--text-color);
     font-size: 1.2rem;
     animation: bounce 2s infinite;
     cursor: pointer;
@@ -506,7 +530,7 @@ body {
 }
 
 .scroll-arrow:hover {
-    background: rgba(255, 255, 255, 0.2);
+    background: rgba(31, 31, 31, 0.3);
     transform: scale(1.1);
 }
 
@@ -593,9 +617,9 @@ body {
 }
 
 .btn-secondary {
-    background: rgba(255, 255, 255, 0.9);
+    background: rgba(31, 31, 31, 0.9);
     color: var(--text-color);
-    border: 2px solid rgba(255, 255, 255, 0.9);
+    border: 2px solid rgba(184, 184, 184, 0.3);
     backdrop-filter: blur(10px);
 }
 
@@ -619,19 +643,20 @@ section {
     font-size: 2.5rem;
     font-weight: 700;
     margin-bottom: 1rem;
-    color: var(--secondary-color);
+    color: var(--heading-color);
 }
 
 .section-header p {
     font-size: 1.1rem;
-    color: var(--text-light);
+    color: var(--text-color);
     max-width: 600px;
     margin: 0 auto;
 }
 
 /* Services Section */
 .services {
-    background: var(--gray-color);
+    background: var(--light-color);
+    padding: 100px 0;
 }
 
 .services-grid {
@@ -692,7 +717,7 @@ section {
     font-size: 1.5rem;
     font-weight: 600;
     margin-bottom: 1rem;
-    color: var(--secondary-color);
+    color: var(--heading-color);
 }
 
 .service-card p {
@@ -791,7 +816,8 @@ section {
 
 /* About Section */
 .about {
-    background: var(--gray-color);
+    background: var(--bg-color);
+    padding: 100px 0;
 }
 
 .about-content {
@@ -805,7 +831,7 @@ section {
     font-size: 2.5rem;
     font-weight: 700;
     margin-bottom: 1.5rem;
-    color: var(--secondary-color);
+    color: var(--heading-color);
 }
 
 .about-text p {
@@ -890,7 +916,7 @@ section {
 .contact-item h4 {
     font-weight: 600;
     margin-bottom: 0.5rem;
-    color: var(--secondary-color);
+    color: var(--heading-color);
 }
 
 .contact-item p {
@@ -1158,9 +1184,18 @@ html {
     opacity: 0;
     transform: translateY(30px);
     transition: all 0.6s ease-out;
+    /* Otimizações de performance */
+    will-change: transform, opacity;
+    backface-visibility: hidden;
 }
 
 .scroll-animate.animate {
     opacity: 1;
     transform: translateY(0);
+}
+
+/* Otimizações gerais de performance para elementos animados */
+.service-card, .portfolio-item, .stat-item {
+    transform: translateZ(0); /* Force hardware acceleration */
+    backface-visibility: hidden;
 }

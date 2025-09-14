@@ -10,9 +10,8 @@ document.addEventListener('DOMContentLoaded', function() {
     initContactForm();
     initScrollAnimations();
     initSmoothScroll();
-    initHeaderScroll();
+    initUnifiedScrollSystem(); // Novo sistema unificado
     initScrollIndicator();
-    initHeroScrollEffects();
     
     // Inicializa YouTube se a API já estiver carregada
     if (window.YT && window.YT.Player) {
@@ -162,32 +161,9 @@ function initNavbar() {
     });
 }
 
-// Funcionalidade do Header com scroll
+// Funcionalidade do Header com scroll (movido para o sistema unificado)
 function initHeaderScroll() {
-    const header = document.querySelector('.header');
-    let lastScroll = 0;
-
-    window.addEventListener('scroll', function() {
-        const currentScroll = window.pageYOffset;
-        
-        // Adiciona/remove classe baseado no scroll
-        if (currentScroll > 100) {
-            header.style.background = 'rgba(255, 255, 255, 0.98)';
-            header.style.boxShadow = '0 2px 20px rgba(0, 0, 0, 0.1)';
-        } else {
-            header.style.background = 'rgba(255, 255, 255, 0.95)';
-            header.style.boxShadow = 'none';
-        }
-
-        // Hide/show header baseado na direção do scroll
-        if (currentScroll > lastScroll && currentScroll > 200) {
-            header.style.transform = 'translateY(-100%)';
-        } else {
-            header.style.transform = 'translateY(0)';
-        }
-        
-        lastScroll = currentScroll;
-    });
+    // Header scroll agora é gerenciado pelo sistema unificado
 }
 
 // Funcionalidade do Filtro do Portfólio
@@ -455,23 +431,7 @@ function initSmoothScroll() {
     });
 }
 
-// Efeito parallax no hero
-function initParallaxEffect() {
-    const hero = document.querySelector('.hero');
-    const heroBackground = document.querySelector('.hero-background');
-    
-    if (hero && heroBackground) {
-        window.addEventListener('scroll', function() {
-            const scrolled = window.pageYOffset;
-            const heroHeight = hero.offsetHeight;
-            
-            if (scrolled < heroHeight) {
-                const speed = 0.5;
-                heroBackground.style.transform = `translateY(${scrolled * speed}px)`;
-            }
-        });
-    }
-}
+// Parallax effect movido para o sistema unificado
 
 // Contador animado para estatísticas
 function initCounters() {
@@ -592,11 +552,95 @@ const utils = {
     }
 };
 
-// Event listeners para performance otimizada
-window.addEventListener('scroll', utils.throttle(() => {
-    // Scroll events otimizados
-}, 16)); // ~60fps
+// Sistema de Scroll Unificado e Otimizado
+let lastScrollTime = 0;
+let lastScroll = 0;
+let ticking = false;
 
+function initUnifiedScrollSystem() {
+    const header = document.querySelector('.header');
+    const heroTop = document.querySelector('.hero-top');
+    const heroBottom = document.querySelector('.hero-bottom');
+    const videoOverlay = document.querySelector('.video-overlay');
+    const hero = document.querySelector('.hero');
+    
+    function updateScroll() {
+        const currentTime = performance.now();
+        const currentScroll = window.pageYOffset;
+        const heroHeight = hero ? hero.offsetHeight : 0;
+        const scrollPercent = heroHeight > 0 ? Math.min(currentScroll / (heroHeight * 0.8), 1) : 0;
+        
+        // Throttle para 60fps
+        if (currentTime - lastScrollTime < 16) {
+            ticking = false;
+            requestAnimationFrame(updateScroll);
+            return;
+        }
+        
+        // Header effects
+        if (header) {
+            if (currentScroll > 100) {
+                header.style.background = 'rgba(255, 255, 255, 0.98)';
+                header.style.boxShadow = '0 2px 20px rgba(0, 0, 0, 0.1)';
+            } else {
+                header.style.background = 'rgba(255, 255, 255, 0.95)';
+                header.style.boxShadow = 'none';
+            }
+
+            // Hide/show header com hysteresis para evitar flicker
+            const threshold = 200;
+            const hysteresis = 20;
+            
+            if (currentScroll > lastScroll + hysteresis && currentScroll > threshold) {
+                header.style.transform = 'translateY(-100%)';
+            } else if (currentScroll < lastScroll - hysteresis) {
+                header.style.transform = 'translateY(0)';
+            }
+        }
+        
+        // Hero effects (apenas se os elementos existirem e estiver na área do hero)
+        if (heroTop && heroBottom && videoOverlay && currentScroll < heroHeight * 1.2) {
+            const scale = Math.max(0.7, 1 - (scrollPercent * 0.25)); // Redução mais suave
+            const opacity = Math.max(0.4, 1 - (scrollPercent * 0.4)); // Redução mais suave
+            
+            // Aplica transformações de forma mais suave e eficiente
+            const translateY = currentScroll * 0.15; // Parallax mais suave
+            heroTop.style.transform = `translate3d(0, ${translateY}px, 0) scale(${scale})`;
+            heroTop.style.opacity = opacity;
+            
+            // Overlay com transição mais suave
+            const overlayOpacity1 = Math.min(0.35, 0.25 + scrollPercent * 0.08);
+            const overlayOpacity2 = Math.min(0.45, 0.35 + scrollPercent * 0.08);
+            videoOverlay.style.background = `linear-gradient(135deg, 
+                rgba(255, 107, 53, ${overlayOpacity1}) 0%, 
+                rgba(44, 62, 80, ${overlayOpacity2}) 100%)`;
+            
+            // Move o bottom content de forma mais suave
+            if (scrollPercent > 0.6) {
+                const bottomTransform = (scrollPercent - 0.6) * 2.5; // Início mais tardio
+                heroBottom.style.transform = `translate3d(0, ${-bottomTransform * 25}px, 0)`;
+            } else {
+                heroBottom.style.transform = 'translate3d(0, 0, 0)';
+            }
+        }
+        
+        lastScroll = currentScroll;
+        lastScrollTime = currentTime;
+        ticking = false;
+    }
+    
+    function requestScrollUpdate() {
+        if (!ticking) {
+            requestAnimationFrame(updateScroll);
+            ticking = true;
+        }
+    }
+    
+    // Um único listener otimizado com passive para melhor performance
+    window.addEventListener('scroll', requestScrollUpdate, { passive: true });
+}
+
+// Event listeners para performance otimizada (removido o listener vazio)
 window.addEventListener('resize', utils.debounce(() => {
     // Resize events otimizados
 }, 250));
@@ -637,40 +681,9 @@ function initScrollIndicator() {
     }
 }
 
-// Efeitos especiais do Hero com scroll
+// Efeitos especiais do Hero com scroll (movido para o sistema unificado)
 function initHeroScrollEffects() {
-    const heroTop = document.querySelector('.hero-top');
-    const heroBottom = document.querySelector('.hero-bottom');
-    const videoOverlay = document.querySelector('.video-overlay');
-    
-    if (!heroTop || !heroBottom || !videoOverlay) return;
-    
-    window.addEventListener('scroll', utils.throttle(() => {
-        const scrollY = window.pageYOffset;
-        const heroHeight = document.querySelector('.hero').offsetHeight;
-        const scrollPercent = Math.min(scrollY / (heroHeight * 0.8), 1);
-        
-        // Efeito de "funil" - o vídeo vai diminuindo conforme desce
-        if (scrollPercent <= 1) {
-            const scale = 1 - (scrollPercent * 0.3); // Reduz até 70% do tamanho
-            const opacity = 1 - (scrollPercent * 0.5); // Reduz opacidade
-            
-            // Aplica transformações no top
-            heroTop.style.transform = `translateY(${scrollY * 0.3}px) scale(${scale})`;
-            heroTop.style.opacity = opacity;
-            
-            // Intensifica o overlay do vídeo (mas mantém suave)
-            videoOverlay.style.background = `linear-gradient(135deg, 
-                rgba(255, 107, 53, ${0.25 + scrollPercent * 0.15}) 0%, 
-                rgba(44, 62, 80, ${0.35 + scrollPercent * 0.15}) 100%)`;
-            
-            // Move o bottom content para cima
-            if (scrollPercent > 0.5) {
-                const bottomTransform = (scrollPercent - 0.5) * 2; // 0 to 1
-                heroBottom.style.transform = `translateY(${-bottomTransform * 50}px)`;
-            }
-        }
-    }, 16));
+    // Hero scroll agora é gerenciado pelo sistema unificado
 }
 
 // Adiciona classe loaded quando a página termina de carregar
