@@ -166,45 +166,231 @@ function initHeaderScroll() {
     // Header scroll agora é gerenciado pelo sistema unificado
 }
 
-// Funcionalidade do Filtro do Portfólio
+// Funcionalidade do Portfólio Moderno
 function initPortfolioFilter() {
-    const filterBtns = document.querySelectorAll('.filter-btn');
-    const portfolioItems = document.querySelectorAll('.portfolio-item');
+    // Dados dos projetos
+    const projects = [
+        {
+            id: 0,
+            title: "Vídeo Institucional - Tech Corp",
+            category: "Corporativo",
+            description: "Produção completa de vídeo institucional para empresa de tecnologia, incluindo roteiro, filmagem e pós-produção. O projeto destacou os valores da empresa e sua missão no mercado.",
+            client: "Tech Corporation",
+            year: "2024",
+            duration: "2:30",
+            videoId: "sample1" // Aqui você colocará o ID real do vídeo
+        },
+        {
+            id: 1,
+            title: "Campanha Digital - Fashion Brand",
+            category: "Marketing",
+            description: "Campanha publicitária completa para marca de moda, com conceito criativo inovador e execução impecável. Incluiu direção de arte, filmagem e pós-produção.",
+            client: "Fashion Brand",
+            year: "2024",
+            duration: "1:45",
+            videoId: "sample2"
+        },
+        {
+            id: 2,
+            title: "Cobertura - Evento Empresarial",
+            category: "Eventos",
+            description: "Cobertura audiovisual completa de evento corporativo, capturando os momentos mais importantes e criando uma narrativa envolvente para a empresa.",
+            client: "Evento Corp",
+            year: "2024",
+            duration: "3:15",
+            videoId: "sample3"
+        },
+        {
+            id: 3,
+            title: "Treinamento Interno - StartUp",
+            category: "Corporativo",
+            description: "Série de vídeos educativos para treinamento interno de startup, com linguagem clara e didática para facilitar o aprendizado dos colaboradores.",
+            client: "StartUp Innovation",
+            year: "2023",
+            duration: "4:20",
+            videoId: "sample4"
+        },
+        {
+            id: 4,
+            title: "Social Media - Restaurante",
+            category: "Marketing",
+            description: "Produção de conteúdo para redes sociais de restaurante gourmet, destacando pratos especiais e criando conexão emocional com o público.",
+            client: "Restaurante Gourmet",
+            year: "2023",
+            duration: "0:45",
+            videoId: "sample5"
+        },
+        {
+            id: 5,
+            title: "Casamento - Villa Exclusive",
+            category: "Eventos",
+            description: "Filmagem completa de casamento em villa exclusiva, capturando momentos únicos e emocionantes para criar uma lembrança eterna para o casal.",
+            client: "Villa Exclusive",
+            year: "2024",
+            duration: "5:30",
+            videoId: "sample6"
+        }
+    ];
 
-    filterBtns.forEach(btn => {
-        btn.addEventListener('click', function() {
-            const filter = this.getAttribute('data-filter');
+    let currentProjectIndex = 0;
+    let autoPlayInterval;
+    let isAutoPlaying = true;
 
-            // Remove active class de todos os botões
-            filterBtns.forEach(b => b.classList.remove('active'));
-            // Adiciona active class no botão clicado
-            this.classList.add('active');
+    // Elementos do DOM
+    const currentCategory = document.getElementById('current-category');
+    const currentProject = document.getElementById('current-project');
+    const totalProjects = document.getElementById('total-projects');
+    const projectTitle = document.getElementById('project-title');
+    const projectDescription = document.getElementById('project-description');
+    const portfolioPlayer = document.getElementById('portfolio-player');
+    const prevBtn = document.getElementById('prev-project');
+    const nextBtn = document.getElementById('next-project');
+    const thumbnails = document.querySelectorAll('.thumbnail-item');
 
-            // Filtra os items do portfólio
-            portfolioItems.forEach(item => {
-                const category = item.getAttribute('data-category');
-                
-                if (filter === 'all' || filter === category) {
-                    item.style.display = 'block';
-                    item.style.opacity = '0';
-                    item.style.transform = 'translateY(20px)';
-                    
-                    // Animação de entrada
-                    setTimeout(() => {
-                        item.style.transition = 'all 0.3s ease';
-                        item.style.opacity = '1';
-                        item.style.transform = 'translateY(0)';
-                    }, 100);
+    // Inicialização
+    if (totalProjects) {
+        totalProjects.textContent = projects.length.toString().padStart(2, '0');
+        updateProject(0);
+        startAutoPlay();
+    }
+
+    // Função para iniciar auto-play
+    function startAutoPlay() {
+        if (autoPlayInterval) clearInterval(autoPlayInterval);
+        
+        autoPlayInterval = setInterval(() => {
+            if (isAutoPlaying) {
+                const nextIndex = (currentProjectIndex + 1) % projects.length;
+                updateProject(nextIndex);
+            }
+        }, 5000); // 5 segundos
+    }
+
+    // Função para parar auto-play
+    function stopAutoPlay() {
+        if (autoPlayInterval) {
+            clearInterval(autoPlayInterval);
+        }
+    }
+
+    // Função para reiniciar auto-play
+    function restartAutoPlay() {
+        stopAutoPlay();
+        startAutoPlay();
+    }
+
+    // Função para atualizar projeto
+    function updateProject(index) {
+        if (index < 0 || index >= projects.length) return;
+
+        const project = projects[index];
+        currentProjectIndex = index;
+
+        // Adiciona animação de saída
+        const infoElements = document.querySelector('.portfolio-info');
+        if (infoElements) {
+            infoElements.classList.add('portfolio-fade');
+        }
+
+        setTimeout(() => {
+            // Atualiza conteúdo
+            if (currentCategory) currentCategory.textContent = project.category;
+            if (currentProject) currentProject.textContent = (index + 1).toString().padStart(2, '0');
+            if (projectTitle) projectTitle.textContent = project.title;
+            if (projectDescription) projectDescription.textContent = project.description;
+
+            // Atualiza thumbnails
+            thumbnails.forEach((thumb, i) => {
+                if (i === index) {
+                    thumb.classList.add('active');
                 } else {
-                    item.style.opacity = '0';
-                    item.style.transform = 'translateY(20px)';
-                    setTimeout(() => {
-                        item.style.display = 'none';
-                    }, 300);
+                    thumb.classList.remove('active');
                 }
             });
+
+            // Atualiza estado dos botões
+            if (prevBtn) prevBtn.disabled = index === 0;
+            if (nextBtn) nextBtn.disabled = index === projects.length - 1;
+
+            // Simula loading do vídeo
+            if (portfolioPlayer) {
+                portfolioPlayer.classList.add('video-loading');
+                setTimeout(() => {
+                    portfolioPlayer.classList.remove('video-loading');
+                }, 800);
+            }
+
+            // Remove animação de saída e adiciona de entrada
+            if (infoElements) {
+                infoElements.classList.remove('portfolio-fade');
+                infoElements.classList.add('active');
+            }
+        }, 250);
+    }
+
+    // Event Listeners para navegação
+    if (prevBtn) {
+        prevBtn.addEventListener('click', () => {
+            if (currentProjectIndex > 0) {
+                updateProject(currentProjectIndex - 1);
+                restartAutoPlay(); // Reinicia o timer após interação manual
+            }
+        });
+    }
+
+    if (nextBtn) {
+        nextBtn.addEventListener('click', () => {
+            if (currentProjectIndex < projects.length - 1) {
+                updateProject(currentProjectIndex + 1);
+                restartAutoPlay(); // Reinicia o timer após interação manual
+            }
+        });
+    }
+
+    // Event Listeners para thumbnails
+    thumbnails.forEach((thumb, index) => {
+        thumb.addEventListener('click', () => {
+            updateProject(index);
+            restartAutoPlay(); // Reinicia o timer após interação manual
         });
     });
+
+    // Event Listener para o player principal
+    if (portfolioPlayer) {
+        portfolioPlayer.addEventListener('click', () => {
+            // Aqui você pode integrar com um player de vídeo real
+            // Por enquanto, vamos simular o carregamento
+            portfolioPlayer.classList.add('video-loading');
+            
+            setTimeout(() => {
+                portfolioPlayer.classList.remove('video-loading');
+                showNotification(`Reproduzindo: ${projects[currentProjectIndex].title}`, 'info');
+            }, 1500);
+        });
+    }
+
+    // Navegação por teclado
+    document.addEventListener('keydown', (e) => {
+        if (e.key === 'ArrowLeft' && currentProjectIndex > 0) {
+            updateProject(currentProjectIndex - 1);
+            restartAutoPlay(); // Reinicia o timer após interação manual
+        } else if (e.key === 'ArrowRight' && currentProjectIndex < projects.length - 1) {
+            updateProject(currentProjectIndex + 1);
+            restartAutoPlay(); // Reinicia o timer após interação manual
+        }
+    });
+
+    // Pausar auto-play quando hover na seção do portfólio
+    const portfolioSection = document.querySelector('.portfolio-showcase');
+    if (portfolioSection) {
+        portfolioSection.addEventListener('mouseenter', () => {
+            isAutoPlaying = false;
+        });
+
+        portfolioSection.addEventListener('mouseleave', () => {
+            isAutoPlaying = true;
+        });
+    }
 }
 
 // Funcionalidade do Formulário de Contato

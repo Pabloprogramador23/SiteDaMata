@@ -160,78 +160,106 @@
                 <h2>Portfólio</h2>
                 <p>Alguns dos nossos trabalhos mais recentes</p>
             </div>
-            <div class="portfolio-filters">
-                <button class="filter-btn active" data-filter="all">Todos</button>
-                <button class="filter-btn" data-filter="corporate">Corporativo</button>
-                <button class="filter-btn" data-filter="marketing">Marketing</button>
-                <button class="filter-btn" data-filter="events">Eventos</button>
+            
+            <!-- Portfolio Showcase -->
+            <div class="portfolio-showcase">
+                <!-- Main Video Player -->
+                <div class="portfolio-video-container">
+                    <div class="portfolio-video-player" id="portfolio-player">
+                        <div class="video-placeholder-main">
+                            <div class="play-button-main">
+                                <i class="fas fa-play"></i>
+                            </div>
+                            <div class="video-overlay-info">
+                                <span class="video-duration">2:30</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Project Information -->
+                <div class="portfolio-info">
+                    <div class="portfolio-header">
+                        <div class="project-category">
+                            <span class="category-tag" id="current-category">Corporativo</span>
+                        </div>
+                        <div class="project-counter">
+                            <span id="current-project">01</span> / <span id="total-projects">06</span>
+                        </div>
+                    </div>
+                    
+                    <div class="project-details">
+                        <h3 id="project-title">Vídeo Institucional - Tech Corp</h3>
+                        <p id="project-description">
+                            Produção completa de vídeo institucional para empresa de tecnologia, 
+                            incluindo roteiro, filmagem e pós-produção. O projeto destacou os 
+                            valores da empresa e sua missão no mercado.
+                        </p>
+                    </div>
+                    
+                    <!-- Navigation Controls -->
+                    <div class="portfolio-controls">
+                        <button class="control-btn prev-btn" id="prev-project">
+                            <i class="fas fa-chevron-left"></i>
+                            Anterior
+                        </button>
+                        <button class="control-btn next-btn" id="next-project">
+                            Próximo
+                            <i class="fas fa-chevron-right"></i>
+                        </button>
+                    </div>
+                </div>
             </div>
-            <div class="portfolio-grid" id="portfolio-grid">
-                <div class="portfolio-item" data-category="corporate">
-                    <div class="portfolio-image">
-                        <div class="portfolio-placeholder">
-                            <i class="fas fa-play"></i>
-                        </div>
-                        <div class="portfolio-overlay">
-                            <h4>Vídeo Institucional - Tech Corp</h4>
-                            <p>Corporativo</p>
+            
+            <!-- Project Thumbnails -->
+            <div class="portfolio-thumbnails">
+                <div class="thumbnail-item active" data-project="0">
+                    <div class="thumbnail-image">
+                        <div class="thumb-placeholder">
+                            <i class="fas fa-building"></i>
                         </div>
                     </div>
+                    <span class="thumbnail-title">Tech Corp</span>
                 </div>
-                <div class="portfolio-item" data-category="marketing">
-                    <div class="portfolio-image">
-                        <div class="portfolio-placeholder">
-                            <i class="fas fa-play"></i>
-                        </div>
-                        <div class="portfolio-overlay">
-                            <h4>Campanha Digital - Fashion Brand</h4>
-                            <p>Marketing</p>
+                <div class="thumbnail-item" data-project="1">
+                    <div class="thumbnail-image">
+                        <div class="thumb-placeholder">
+                            <i class="fas fa-bullhorn"></i>
                         </div>
                     </div>
+                    <span class="thumbnail-title">Fashion Brand</span>
                 </div>
-                <div class="portfolio-item" data-category="events">
-                    <div class="portfolio-image">
-                        <div class="portfolio-placeholder">
-                            <i class="fas fa-play"></i>
-                        </div>
-                        <div class="portfolio-overlay">
-                            <h4>Cobertura - Evento Empresarial</h4>
-                            <p>Eventos</p>
+                <div class="thumbnail-item" data-project="2">
+                    <div class="thumbnail-image">
+                        <div class="thumb-placeholder">
+                            <i class="fas fa-calendar"></i>
                         </div>
                     </div>
+                    <span class="thumbnail-title">Evento Corp</span>
                 </div>
-                <div class="portfolio-item" data-category="corporate">
-                    <div class="portfolio-image">
-                        <div class="portfolio-placeholder">
-                            <i class="fas fa-play"></i>
-                        </div>
-                        <div class="portfolio-overlay">
-                            <h4>Treinamento Interno - StartUp</h4>
-                            <p>Corporativo</p>
+                <div class="thumbnail-item" data-project="3">
+                    <div class="thumbnail-image">
+                        <div class="thumb-placeholder">
+                            <i class="fas fa-graduation-cap"></i>
                         </div>
                     </div>
+                    <span class="thumbnail-title">StartUp</span>
                 </div>
-                <div class="portfolio-item" data-category="marketing">
-                    <div class="portfolio-image">
-                        <div class="portfolio-placeholder">
-                            <i class="fas fa-play"></i>
-                        </div>
-                        <div class="portfolio-overlay">
-                            <h4>Social Media - Restaurante</h4>
-                            <p>Marketing</p>
+                <div class="thumbnail-item" data-project="4">
+                    <div class="thumbnail-image">
+                        <div class="thumb-placeholder">
+                            <i class="fas fa-utensils"></i>
                         </div>
                     </div>
+                    <span class="thumbnail-title">Restaurante</span>
                 </div>
-                <div class="portfolio-item" data-category="events">
-                    <div class="portfolio-image">
-                        <div class="portfolio-placeholder">
-                            <i class="fas fa-play"></i>
-                        </div>
-                        <div class="portfolio-overlay">
-                            <h4>Casamento - Villa Exclusive</h4>
-                            <p>Eventos</p>
+                <div class="thumbnail-item" data-project="5">
+                    <div class="thumbnail-image">
+                        <div class="thumb-placeholder">
+                            <i class="fas fa-heart"></i>
                         </div>
                     </div>
+                    <span class="thumbnail-title">Casamento</span>
                 </div>
             </div>
         </div>
