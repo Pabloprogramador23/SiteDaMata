@@ -728,385 +728,325 @@ section {
 /* Portfolio Section */
 .portfolio {
     background: var(--bg-color);
-    padding: 120px 0;
+    padding: 100px 0;
 }
 
-.portfolio-showcase {
-    display: grid;
-    grid-template-columns: 1fr 0.8fr;
+.portfolio-feed {
+    max-width: 700px;
+    margin: 0 auto;
+    display: flex;
+    flex-direction: column;
     gap: 4rem;
-    align-items: center;
-    margin-bottom: 4rem;
 }
 
-/* Main Video Container */
-.portfolio-video-container {
-    position: relative;
-    width: 100%;
-    height: 500px;
-    border-radius: 20px;
-    overflow: hidden;
-    box-shadow: 0 25px 60px rgba(0, 0, 0, 0.4);
+.project-card-feed {
+    background: transparent;
+    border-radius: 0;
+    box-shadow: none;
+    overflow: visible;
     transition: var(--transition);
+    border: none;
 }
 
-.portfolio-video-container:hover {
-    transform: translateY(-10px);
-    box-shadow: 0 35px 80px rgba(0, 0, 0, 0.5);
+.project-card-feed:hover {
+    transform: none;
+    box-shadow: none;
 }
 
-.portfolio-video-player {
-    width: 100%;
-    height: 100%;
-    position: relative;
-    background: var(--gradient);
-    overflow: hidden;
-}
-
-.video-placeholder-main {
-    width: 100%;
-    height: 100%;
+.project-card-header {
     display: flex;
-    justify-content: center;
     align-items: center;
-    position: relative;
-    background: linear-gradient(135deg, 
-        rgba(255, 122, 80, 0.9) 0%, 
-        rgba(247, 147, 30, 0.9) 100%);
+    padding: 0 0 0.75rem 0;
+    gap: 0.75rem;
+    background: transparent;
 }
 
-.play-button-main {
-    width: 100px;
-    height: 100px;
-    background: rgba(255, 255, 255, 0.95);
+.project-card-avatar {
+    width: 35px;
+    height: 35px;
     border-radius: 50%;
+    background: var(--gradient);
     display: flex;
+    align-items: center;
     justify-content: center;
-    align-items: center;
-    cursor: pointer;
-    transition: var(--transition);
-    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
 }
 
-.play-button-main:hover {
-    transform: scale(1.1);
-    background: white;
-    box-shadow: 0 15px 40px rgba(0, 0, 0, 0.4);
+.project-card-avatar img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    border-radius: 50%;
 }
 
-.play-button-main i {
-    font-size: 2.5rem;
-    color: var(--primary-color);
-    margin-left: 8px;
-}
-
-.video-overlay-info {
-    position: absolute;
-    bottom: 20px;
-    right: 20px;
-}
-
-.video-duration {
-    background: rgba(0, 0, 0, 0.8);
-    color: white;
-    padding: 8px 16px;
-    border-radius: 20px;
-    font-size: 0.9rem;
+.project-card-user h4 {
+    font-size: 0.95rem;
     font-weight: 600;
+    color: var(--heading-color);
+    margin: 0;
 }
 
-/* Portfolio Information */
-.portfolio-info {
-    padding: 2rem 0;
+.project-card-user span {
+    font-size: 0.8rem;
+    color: var(--text-light);
+    display: block;
+    margin-top: 2px;
 }
 
-.portfolio-header {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    margin-bottom: 2rem;
+.project-card-media {
+    width: 100%;
+    position: relative;
+    padding-top: 100%; /* Aspect ratio quadrado como Instagram */
+    background: #000;
+    overflow: hidden;
+    border-radius: 8px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
 }
 
-.category-tag {
+.project-card-media img {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+}
+
+.project-card-body {
+    background: var(--light-color);
+    padding: 1rem 1.25rem;
+    margin-top: 0.5rem;
+    border-radius: 8px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+    border: 1px solid rgba(255, 122, 80, 0.1);
+    transition: var(--transition);
+}
+
+.project-card-body:hover {
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+}
+
+.project-card-info {
+    color: var(--text-light);
+    line-height: 1.7;
+}
+
+.project-card-info p {
+    margin: 0 0 0.5rem 0;
+}
+
+.project-card-info p:last-child {
+    margin-bottom: 0;
+}
+
+.project-card-info strong {
+    color: var(--heading-color);
+    font-weight: 600;
+    font-size: 1.05rem;
+}
+
+.project-card-info .category-tag {
     display: inline-block;
     background: var(--gradient);
     color: white;
-    padding: 8px 20px;
+    padding: 4px 12px;
     border-radius: 25px;
-    font-size: 0.9rem;
+    font-size: 0.75rem;
     font-weight: 600;
     text-transform: uppercase;
     letter-spacing: 1px;
+    margin-left: 0.5rem;
+    vertical-align: middle;
 }
 
-.project-counter {
-    font-size: 1.1rem;
-    color: var(--text-color);
-    font-weight: 600;
+@media (max-width: 768px) {
+    .portfolio-feed {
+        max-width: 100%;
+    }
 }
 
-.project-counter #current-project {
-    color: var(--primary-color);
-    font-size: 1.3rem;
-}
-
-.project-details h3 {
-    font-size: 2.2rem;
-    font-weight: 700;
-    color: var(--heading-color);
-    margin-bottom: 1.5rem;
-    line-height: 1.3;
-}
-
-.project-details p {
-    font-size: 1.1rem;
-    color: var(--text-light);
-    line-height: 1.8;
-    margin-bottom: 2rem;
-}
-
-/* Project Specifications */
-.project-specs {
-    display: flex;
-    flex-direction: column;
-    gap: 0.8rem;
-    margin-bottom: 3rem;
-}
-
-.spec-item {
-    display: flex;
-    align-items: center;
-}
-
-.spec-value {
-    color: var(--text-color);
-    font-weight: 500;
-    font-size: 1rem;
-}
-
-/* Portfolio Navigation Controls */
-.portfolio-controls {
-    display: flex;
-    gap: 1rem;
-}
-
-.control-btn {
-    display: flex;
-    align-items: center;
-    gap: 10px;
-    padding: 12px 24px;
-    border: 2px solid var(--primary-color);
-    background: transparent;
-    color: var(--primary-color);
-    border-radius: 50px;
-    font-weight: 600;
-    cursor: pointer;
-    transition: var(--transition);
-    font-size: 0.95rem;
-}
-
-.control-btn:hover {
-    background: var(--primary-color);
-    color: white;
-    transform: translateY(-2px);
-}
-
-.control-btn:disabled {
-    opacity: 0.5;
-    cursor: not-allowed;
-    transform: none;
-}
-
-.prev-btn {
-    flex-direction: row;
-}
-
-.next-btn {
-    flex-direction: row-reverse;
-}
-
-/* Portfolio Thumbnails */
-.portfolio-thumbnails {
-    display: flex;
-    gap: 1.5rem;
-    justify-content: center;
-    flex-wrap: wrap;
-    margin-top: 3rem;
-}
-
-.thumbnail-item {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 10px;
-    cursor: pointer;
-    transition: var(--transition);
-    opacity: 0.6;
-}
-
-.thumbnail-item.active {
-    opacity: 1;
-}
-
-.thumbnail-item:hover {
-    opacity: 1;
-    transform: translateY(-5px);
-}
-
-.thumbnail-image {
-    width: 80px;
-    height: 60px;
-    border-radius: 10px;
+/* --- Estilos do Carrossel Corrigidos --- */
+.project-card-media {
+    position: relative; /* Essencial para o posicionamento dos filhos */
+    width: 100%;
+    padding-top: 75%; /* Força o aspect ratio de 4:3 */
+    background-color: #000; /* Fundo preto caso a imagem demore a carregar */
     overflow: hidden;
-    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
-    transition: var(--transition);
 }
 
-.thumbnail-item.active .thumbnail-image {
-    box-shadow: 0 8px 25px rgba(255, 122, 80, 0.4);
-    border: 3px solid var(--primary-color);
-}
-
-.thumb-placeholder {
+/* Imagem única (quando não há carrossel) */
+.project-card-media > img {
+    position: absolute;
+    top: 0;
+    left: 0;
     width: 100%;
     height: 100%;
-    background: var(--gradient);
+    object-fit: contain; /* Alterado de 'cover' para 'contain' */
+}
+
+.carousel-slides {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+}
+
+.carousel-slide {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    opacity: 0;
+    transition: opacity 0.4s ease-in-out;
+    visibility: hidden;
+}
+
+.carousel-slide.active {
+    opacity: 1;
+    visibility: visible;
+}
+
+.carousel-slide img {
+    width: 100%;
+    height: 100%;
+    object-fit: contain; /* Alterado de 'cover' para 'contain' */
+}
+
+.carousel-btn {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    background-color: rgba(0, 0, 0, 0.4);
+    color: white;
+    border: none;
+    padding: 0.5rem 1rem;
+    font-size: 1.5rem;
+    cursor: pointer;
+    transition: background-color 0.3s;
+    z-index: 10;
+    border-radius: 50%;
+    width: 40px;
+    height: 40px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.carousel-btn:hover {
+    background-color: rgba(0, 0, 0, 0.7);
+}
+
+.carousel-btn.prev {
+    left: 15px;
+}
+
+.carousel-btn.next {
+    right: 15px;
+}
+
+.carousel-dots {
+    position: absolute;
+    bottom: 15px;
+    left: 50%;
+    transform: translateX(-50%);
+    display: flex;
+    gap: 0.6rem;
+    z-index: 10;
+}
+
+.dot {
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    background-color: rgba(255, 255, 255, 0.5);
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+.dot.active {
+    background-color: white;
+}
+
+/* --- Estilos do Lightbox --- */
+.lightbox-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.9);
+    z-index: 2000;
     display: flex;
     justify-content: center;
     align-items: center;
-    color: white;
-}
-
-.thumb-placeholder i {
-    font-size: 1.2rem;
-}
-
-.thumbnail-title {
-    font-size: 0.8rem;
-    color: var(--text-color);
-    font-weight: 500;
-    text-align: center;
-}
-
-.thumbnail-item.active .thumbnail-title {
-    color: var(--primary-color);
-    font-weight: 600;
-}
-
-/* Animation Classes */
-.portfolio-fade {
     opacity: 0;
-    transform: translateX(30px);
-    transition: all 0.5s ease;
+    visibility: hidden;
+    transition: opacity 0.4s, visibility 0.4s;
 }
 
-.portfolio-fade.active {
+.lightbox-overlay.visible {
     opacity: 1;
-    transform: translateX(0);
+    visibility: visible;
 }
 
-.video-loading {
+.lightbox-content {
     position: relative;
+    width: 90%;
+    height: 90%;
+    max-width: 1200px;
+    max-height: 80vh;
 }
 
-.video-loading::after {
-    content: '';
+/* O container de mídia dentro do lightbox */
+.lightbox-content .project-card-media {
+    width: 100%;
+    height: 100%;
+    padding-top: 0; /* Remove o padding de aspect ratio */
+}
+
+.lightbox-close {
     position: absolute;
-    top: 50%;
-    left: 50%;
-    width: 40px;
-    height: 40px;
-    border: 3px solid rgba(255, 255, 255, 0.3);
-    border-top: 3px solid white;
-    border-radius: 50%;
-    animation: spin 1s linear infinite;
-    transform: translate(-50%, -50%);
+    top: 20px;
+    right: 30px;
+    color: white;
+    font-size: 3rem;
+    font-weight: bold;
+    cursor: pointer;
+    z-index: 2010;
 }
 
-@keyframes spin {
-    0% { transform: translate(-50%, -50%) rotate(0deg); }
-    100% { transform: translate(-50%, -50%) rotate(360deg); }
+body.lightbox-active {
+    overflow: hidden;
 }
 
-/* Responsive Design for Portfolio */
-@media (max-width: 768px) {
-    .portfolio-showcase {
-        grid-template-columns: 1fr;
-        gap: 2rem;
-    }
-    
-    .portfolio-video-container {
-        height: 300px;
-        margin-bottom: 1rem;
-    }
-    
-    .project-details h3 {
-        font-size: 1.8rem;
-    }
-    
-    .portfolio-header {
-        flex-direction: column;
-        gap: 1rem;
-        align-items: flex-start;
-    }
-    
-    .portfolio-controls {
-        flex-direction: column;
-    }
-    
-    .control-btn {
-        justify-content: center;
-    }
-    
-    .project-specs {
-        padding: 1.5rem;
-    }
-    
-    .portfolio-thumbnails {
-        gap: 1rem;
-    }
-    
-    .thumbnail-image {
-        width: 60px;
-        height: 45px;
-    }
+/* --- Estilo do Botão Play para Vídeos --- */
+.play-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: rgba(0, 0, 0, 0.3);
+    cursor: pointer;
+    transition: background-color 0.3s;
 }
 
-@media (max-width: 480px) {
-    .portfolio {
-        padding: 80px 0;
-    }
-    
-    .portfolio-video-container {
-        height: 250px;
-    }
-    
-    .play-button-main {
-        width: 70px;
-        height: 70px;
-    }
-    
-    .play-button-main i {
-        font-size: 1.8rem;
-    }
-    
-    .project-details h3 {
-        font-size: 1.5rem;
-    }
-    
-    .portfolio-thumbnails {
-        gap: 0.8rem;
-    }
-    
-    .thumbnail-image {
-        width: 50px;
-        height: 38px;
-    }
-    
-    .thumbnail-title {
-        font-size: 0.7rem;
-    }
+.play-overlay:hover {
+    background-color: rgba(0, 0, 0, 0.5);
 }
+
+.play-overlay i {
+    color: white;
+    font-size: 4rem;
+    text-shadow: 0 0 15px rgba(0, 0, 0, 0.5);
+}
+
+
 
 /* About Section */
 .about {

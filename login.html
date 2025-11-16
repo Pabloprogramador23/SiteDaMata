@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login - Admin Da Mata Produtora</title>
+    <link rel="stylesheet" href="styles.css">
+    <style>
+        body {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            background-color: var(--bg-color);
+        }
+        .login-box {
+            width: 100%;
+            max-width: 400px;
+            padding: 3rem;
+            background: var(--light-color);
+            border-radius: var(--border-radius);
+            box-shadow: var(--shadow);
+            text-align: center;
+        }
+        .login-box h1 {
+            color: var(--primary-color);
+            margin-bottom: 1.5rem;
+        }
+        .login-form input, .reset-form input {
+            width: 100%;
+            padding: 12px 16px;
+            margin-bottom: 1rem;
+            border: 2px solid #333;
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            border-radius: 8px;
+            font-size: 1rem;
+        }
+        .login-form input:focus, .reset-form input:focus {
+            outline: none;
+            border-color: var(--primary-color);
+        }
+        .error-message {
+            color: #dc3545;
+            margin-top: 1rem;
+            display: none;
+        }
+        #reset-section {
+            display: none; /* Começa escondido */
+            margin-top: 2rem;
+            border-top: 1px solid #444;
+            padding-top: 2rem;
+        }
+        #secret-question {
+            font-style: italic;
+            color: var(--text-light);
+            margin-bottom: 1rem;
+        }
+        .forgot-password-link {
+            display: block;
+            margin-top: 1rem;
+            color: var(--primary-color);
+            cursor: pointer;
+            text-decoration: underline;
+        }
+    </style>
+</head>
+<body>
+    <div class="login-box">
+        <!-- Seção de Login Principal -->
+        <div id="login-section">
+            <h1>Área Restrita</h1>
+            <form id="login-form" class="login-form">
+                <input type="password" id="password" placeholder="Senha de Acesso" required>
+                <button type="submit" class="btn btn-primary" style="width: 100%;">Entrar</button>
+            </form>
+            <a id="forgot-password-link" class="forgot-password-link">Esqueci minha senha</a>
+        </div>
+
+        <!-- Seção de Redefinição de Senha -->
+        <div id="reset-section">
+            <h2>Redefinir Senha</h2>
+            <p id="secret-question">Carregando pergunta...</p>
+            <form id="reset-form" class="reset-form">
+                <input type="text" id="secret-answer" placeholder="Sua resposta secreta" required>
+                <input type="password" id="new-password" placeholder="Sua nova senha" required>
+                <button type="submit" class="btn btn-primary" style="width: 100%;">Redefinir Senha</button>
+            </form>
+            <a id="cancel-reset-link" class="forgot-password-link">Voltar para o Login</a>
+        </div>
+
+        <p id="message-area" class="error-message"></p>
+    </div>
+    <script src="login.js"></script>
+</body>
+</html>

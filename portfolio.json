@@ -1,0 +1,148 @@
+[
+    {
+        "id": 1,
+        "title": "Campanha Institucional Tech Solutions",
+        "client": "Tech Solutions Brasil",
+        "category": "Corporativo",
+        "description": "Vídeo institucional moderno apresentando os valores e inovações da empresa líder em tecnologia. Produção completa com drone, entrevistas e motion graphics.",
+        "imageUrls": [
+            "https://images.unsplash.com/photo-1504384308090-c894fdcc538d?q=80&w=2070&auto=format&fit=crop",
+            "https://images.unsplash.com/photo-1552664730-d307ca884978?q=80&w=2070&auto=format&fit=crop",
+            "https://images.unsplash.com/photo-1542744173-8e7e53415bb0?q=80&w=2070&auto=format&fit=crop"
+        ],
+        "videoId": "https://www.youtube.com/embed/dQw4w9WgXcQ"
+    },
+    {
+        "id": 2,
+        "title": "Lançamento de Produto - Nova Linha Premium",
+        "client": "Boutique Elegance",
+        "category": "Marketing Digital",
+        "description": "Campanha de lançamento para nova linha de produtos premium com estética sofisticada e storytelling envolvente. Filmado em locações exclusivas.",
+        "imageUrls": [
+            "https://images.unsplash.com/photo-1556742502-ec7c0e9f34b1?q=80&w=1974&auto=format&fit=crop",
+            "https://images.unsplash.com/photo-1490481651871-ab68de25d43d?q=80&w=2070&auto=format&fit=crop"
+        ],
+        "videoId": "https://www.youtube.com/embed/HcQR_1vpnP0"
+    },
+    {
+        "id": 3,
+        "title": "Documentário Sustentabilidade",
+        "client": "ONG Amazônia Viva",
+        "category": "Documentários",
+        "description": "Documentário de 15 minutos sobre práticas sustentáveis na Amazônia, com imagens aéreas impressionantes e depoimentos emocionantes de comunidades locais.",
+        "imageUrls": [
+            "https://images.unsplash.com/photo-1516026672322-bc52d61a55d5?q=80&w=2072&auto=format&fit=crop",
+            "https://images.unsplash.com/photo-1425082661705-1834bfd09dca?q=80&w=2076&auto=format&fit=crop",
+            "https://images.unsplash.com/photo-1441974231531-c6227db76b6e?q=80&w=2071&auto=format&fit=crop"
+        ]
+    },
+    {
+        "id": 4,
+        "title": "Casamento Ana & Carlos - Villa Toscana",
+        "client": "Ana & Carlos",
+        "category": "Eventos",
+        "description": "Cobertura cinematográfica completa de casamento em villa italiana, capturando cada momento especial com sensibilidade e técnica impecável.",
+        "imageUrls": [
+            "https://images.unsplash.com/photo-1519741497674-611481863552?q=80&w=2070&auto=format&fit=crop",
+            "https://images.unsplash.com/photo-1465495976277-4387d4b0b4c6?q=80&w=2070&auto=format&fit=crop",
+            "https://images.unsplash.com/photo-1511285560929-80b456fea0bc?q=80&w=2069&auto=format&fit=crop",
+            "https://images.unsplash.com/photo-1606800052052-a08af7148866?q=80&w=2070&auto=format&fit=crop"
+        ],
+        "videoId": "https://www.youtube.com/embed/dQw4w9WgXcQ"
+    },
+    {
+        "id": 5,
+        "title": "Videoclipe 'Horizonte' - Banda Lumina",
+        "client": "Banda Lumina",
+        "category": "Videoclipes",
+        "description": "Videoclipe autoral com conceito visual único, explorando efeitos especiais e direção de fotografia criativa. Gravado em locações urbanas e naturais.",
+        "imageUrls": [
+            "https://images.unsplash.com/photo-1511671782779-c97d3d27a1d4?q=80&w=2070&auto=format&fit=crop",
+            "https://images.unsplash.com/photo-1493225457124-a3eb161ffa5f?q=80&w=2070&auto=format&fit=crop"
+        ],
+        "videoId": "https://www.youtube.com/embed/HcQR_1vpnP0"
+    },
+    {
+        "id": 6,
+        "title": "Social Media - Gastronomia Artesanal",
+        "client": "Restaurante Sabor & Arte",
+        "category": "Marketing Digital",
+        "description": "Série de vídeos curtos para Instagram e TikTok mostrando o preparo artesanal de pratos exclusivos, aumentando engajamento em 300%.",
+        "imageUrls": [
+            "https://images.unsplash.com/photo-1555939594-58d7cb561ad1?q=80&w=1974&auto=format&fit=crop",
+            "https://images.unsplash.com/photo-1414235077428-338989a2e8c0?q=80&w=2070&auto=format&fit=crop",
+            "https://images.unsplash.com/photo-1504674900247-0877df9cc836?q=80&w=2070&auto=format&fit=crop"
+        ]
+    },
+    {
+        "id": 7,
+        "title": "Congresso Internacional de Inovação 2025",
+        "client": "Associação Brasileira de Tecnologia",
+        "category": "Eventos",
+        "description": "Cobertura completa de evento com 3 dias de duração, incluindo palestras, workshops e networking. Entrega de highlights e vídeo completo.",
+        "imageUrls": [
+            "https://images.unsplash.com/photo-1540575467063-178a50c2df87?q=80&w=2070&auto=format&fit=crop",
+            "https://images.unsplash.com/photo-1505373877841-8d25f7d46678?q=80&w=2012&auto=format&fit=crop"
+        ],
+        "videoId": "https://www.youtube.com/embed/dQw4w9WgXcQ"
+    },
+    {
+        "id": 8,
+        "title": "Treinamento Corporativo - Liderança 4.0",
+        "client": "Grupo Empresarial Master",
+        "category": "Corporativo",
+        "description": "Série educativa de 6 episódios sobre novas práticas de liderança, com dramatizações, animações explicativas e depoimentos de especialistas.",
+        "imageUrls": [
+            "https://images.unsplash.com/photo-1552664730-d307ca884978?q=80&w=2070&auto=format&fit=crop",
+            "https://images.unsplash.com/photo-1557804506-669a67965ba0?q=80&w=2074&auto=format&fit=crop"
+        ]
+    },
+    {
+        "id": 9,
+        "title": "Tour Virtual - Empreendimento Luxo",
+        "client": "Construtora Horizonte Alto",
+        "category": "Marketing Digital",
+        "description": "Tour virtual em 360° e vídeo promocional de empreendimento de luxo, destacando acabamentos premium e localização privilegiada.",
+        "imageUrls": [
+            "https://images.unsplash.com/photo-1600585154340-be6161a56a0c?q=80&w=2070&auto=format&fit=crop",
+            "https://images.unsplash.com/photo-1600607687939-ce8a6c25118c?q=80&w=2053&auto=format&fit=crop",
+            "https://images.unsplash.com/photo-1600566753190-17f0baa2a6c3?q=80&w=2070&auto=format&fit=crop"
+        ],
+        "videoId": "https://www.youtube.com/embed/HcQR_1vpnP0"
+    },
+    {
+        "id": 10,
+        "title": "Depoimentos de Clientes - Rede de Academias",
+        "client": "FitLife Academias",
+        "category": "Corporativo",
+        "description": "Série de depoimentos autênticos de clientes mostrando transformações reais, criando conexão emocional e aumentando conversões.",
+        "imageUrls": [
+            "https://images.unsplash.com/photo-1534438327276-14e5300c3a48?q=80&w=2070&auto=format&fit=crop",
+            "https://images.unsplash.com/photo-1517836357463-d25dfeac3438?q=80&w=2070&auto=format&fit=crop"
+        ]
+    },
+    {
+        "id": 11,
+        "title": "Fashion Film - Coleção Primavera/Verão",
+        "client": "Marca Estilo Urbano",
+        "category": "Videoclipes",
+        "description": "Fashion film conceitual para lançamento de coleção, com fotografia artística e edição dinâmica que captura a essência da marca.",
+        "imageUrls": [
+            "https://images.unsplash.com/photo-1490481651871-ab68de25d43d?q=80&w=2070&auto=format&fit=crop",
+            "https://images.unsplash.com/photo-1483985988355-763728e1935b?q=80&w=2070&auto=format&fit=crop",
+            "https://images.unsplash.com/photo-1515886657613-9f3515b0c78f?q=80&w=2020&auto=format&fit=crop"
+        ]
+    },
+    {
+        "id": 12,
+        "title": "Behind the Scenes - Produção Musical",
+        "client": "Artista Bruno Melo",
+        "category": "Documentários",
+        "description": "Documentário intimista mostrando o processo criativo e os bastidores da gravação do novo álbum do artista, com acesso exclusivo.",
+        "imageUrls": [
+            "https://images.unsplash.com/photo-1598488035139-bdbb2231ce04?q=80&w=2070&auto=format&fit=crop",
+            "https://images.unsplash.com/photo-1519892300165-cb5542fb47c7?q=80&w=2070&auto=format&fit=crop"
+        ],
+        "videoId": "https://www.youtube.com/embed/dQw4w9WgXcQ"
+    }
+]

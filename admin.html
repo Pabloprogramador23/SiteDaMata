@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin - Da Mata Produtora</title>
+    <link rel="stylesheet" href="styles.css">
+    <style>
+        body {
+            background-color: var(--bg-color);
+        }
+        .admin-container {
+            max-width: 900px;
+            margin: 4rem auto;
+            padding: 2rem;
+            background: var(--light-color);
+            border-radius: var(--border-radius);
+            box-shadow: var(--shadow);
+        }
+        .admin-header h1 {
+            color: var(--primary-color);
+            text-align: center;
+            margin-bottom: 2rem;
+        }
+        .form-section, .list-section {
+            margin-bottom: 3rem;
+        }
+        .form-section h2, .list-section h2 {
+            color: var(--heading-color);
+            margin-bottom: 1.5rem;
+            border-bottom: 2px solid var(--primary-color);
+            padding-bottom: 0.5rem;
+        }
+        .admin-form {
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+        }
+        .admin-form input, .admin-form textarea, .admin-form select {
+            width: 100%;
+            padding: 12px 16px;
+            border: 2px solid #333;
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            border-radius: 8px;
+            font-size: 1rem;
+            transition: var(--transition);
+            font-family: inherit;
+        }
+        .admin-form input:focus, .admin-form textarea:focus, .admin-form select:focus {
+            outline: none;
+            border-color: var(--primary-color);
+        }
+        .admin-form textarea {
+            resize: vertical;
+            min-height: 100px;
+        }
+        .project-list-item {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            background: var(--bg-color);
+            padding: 1rem;
+            border-radius: 8px;
+            margin-bottom: 1rem;
+            border-left: 4px solid var(--primary-color);
+        }
+        .project-list-item p {
+            margin: 0;
+            color: var(--text-color);
+        }
+        .project-list-item .actions {
+            display: flex;
+            gap: 1rem;
+        }
+        .btn-small {
+            padding: 8px 12px;
+            font-size: 0.9rem;
+            border-radius: 6px;
+        }
+        .btn-edit {
+            background: #007bff;
+            color: white;
+        }
+        .btn-delete {
+            background: #dc3545;
+            color: white;
+        }
+        .save-section {
+            text-align: center;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="admin-container">
+        <div class="admin-header" style="display: flex; justify-content: space-between; align-items: center;">
+            <h1>Gerenciador de Portfólio</h1>
+            <a href="/logout" class="btn btn-secondary">Sair</a>
+        </div>
+
+        <!-- Formulário para Adicionar/Editar Projetos -->
+        <section class="form-section">
+            <h2 id="form-title">Adicionar Novo Projeto</h2>
+            <form id="project-form" class="admin-form">
+                <input type="hidden" id="project-id">
+                <input type="text" id="project-title" placeholder="Título do Projeto" required>
+                <input type="text" id="project-client" placeholder="Cliente" required>
+                <select id="project-category" required>
+                    <option value="Corporativo">Corporativo</option>
+                    <option value="Marketing">Marketing</option>
+                    <option value="Eventos">Eventos</option>
+                    <option value="Documentários">Documentários</option>
+                    <option value="Videoclipes">Videoclipes</option>
+                </select>
+                <textarea id="project-description" placeholder="Descrição do Projeto" required></textarea>
+                
+                <div>
+                    <label for="project-images">Imagens do Projeto (selecione uma ou mais)</label>
+                    <input type="file" id="project-images" accept="image/*" multiple>
+                    <div id="image-preview" style="display: flex; gap: 1rem; flex-wrap: wrap; margin-top: 1rem;"></div>
+                </div>
+
+                <input type="text" id="project-videoId" placeholder="URL de embed do YouTube (opcional)">
+                <button type="submit" class="btn btn-primary">Salvar Projeto</button>
+                <button type="button" id="cancel-edit" class="btn btn-secondary" style="display: none;">Cancelar Edição</button>
+            </form>
+        </section>
+
+        <!-- Lista de Projetos Existentes -->
+        <section class="list-section">
+            <h2>Projetos Atuais</h2>
+            <div id="project-list">
+                <!-- Projetos serão listados aqui -->
+            </div>
+        </section>
+
+    </div>
+
+    <script src="admin.js"></script>
+</body>
+</html>

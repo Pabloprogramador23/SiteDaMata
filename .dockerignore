@@ -1,0 +1,19 @@
+# Ignora dependências que serão instaladas dentro do container
+node_modules
+
+# Ignora logs do npm
+npm-debug.log
+
+# Ignora arquivos e pastas do Git
+.git
+.gitignore
+
+# Ignora arquivos de configuração do Docker
+Dockerfile
+docker-compose.yml
+
+# Ignora arquivos de configuração do editor e do sistema operacional
+.vscode
+.idea
+*.swp
+Thumbs.db

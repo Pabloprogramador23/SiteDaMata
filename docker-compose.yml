@@ -1,0 +1,46 @@
+version: '3.8'
+
+services:
+  # Serviço da aplicação Node.js
+  app:
+    # Constrói a imagem a partir do Dockerfile no diretório atual
+    build: .
+    # Nome do container para facilitar a referência
+    container_name: mata_produtora_app
+    # Reinicia o container automaticamente em caso de falha
+    restart: unless-stopped
+    # Não é necessário mapear portas para o host, pois o Nginx fará o proxy
+    # A porta 3000 é exposta para outros containers na mesma rede (como o Nginx)
+
+  # Serviço do Nginx (Proxy Reverso)
+  nginx:
+    # Usa a imagem oficial do Nginx
+    image: nginx:stable-alpine
+    container_name: mata_produtora_nginx
+    restart: unless-stopped
+    # Mapeia a porta 80 do host para a porta 80 do container
+    # Todo o tráfego externo passará por aqui
+    ports:
+      - "80:80"
+      # --- PASSO 8: HABILITAR PORTA HTTPS ---
+      # DESCOMENTE a linha abaixo quando for configurar HTTPS no nginx.prod.conf
+      # - "443:443"
+    volumes:
+      # Monta o arquivo de configuração do Nginx que criamos
+      - ./nginx.prod.conf:/etc/nginx/conf.d/default.conf
+      # Monta o código da aplicação para que o Nginx possa servir os arquivos estáticos diretamente
+      # Isso é importante para que o Nginx tenha acesso aos arquivos como index.html, styles.css, etc.
+      - .:/usr/src/app
+      # --- PASSO 9: MONTAR VOLUMES DOS CERTIFICADOS SSL ---
+      # DESCOMENTE as linhas abaixo e ajuste os caminhos para montar os certificados SSL
+      # gerados pelo Certbot (ou outro método) na sua VPS.
+      # O Certbot geralmente salva em /etc/letsencrypt/live/seu_dominio.com/
+      # - /etc/letsencrypt/live/seu_dominio.com:/etc/letsencrypt/live/seu_dominio.com:ro
+      # - /etc/letsencrypt/archive/seu_dominio.com:/etc/letsencrypt/archive/seu_dominio.com:ro
+      # - /etc/letsencrypt/options-ssl-nginx.conf:/etc/letsencrypt/options-ssl-nginx.conf:ro
+      # - /etc/letsencrypt/ssl-dhparams.pem:/etc/letsencrypt/ssl-dhparams.pem:ro
+    # Garante que o serviço 'app' seja iniciado antes do Nginx
+    depends_on:
+      - app
+
+# O Docker Compose cria uma rede padrão para esses serviços se comunicarem.

@@ -1,0 +1,30 @@
+{
+  "name": "sitedamata",
+  "version": "1.0.0",
+  "description": "",
+  "main": "admin.js",
+  "scripts": {
+    "start": "node server.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Pabloprogramador23/SiteDaMata.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "commonjs",
+  "bugs": {
+    "url": "https://github.com/Pabloprogramador23/SiteDaMata/issues"
+  },
+  "homepage": "https://github.com/Pabloprogramador23/SiteDaMata#readme",
+  "dependencies": {
+    "bcrypt": "^6.0.0",
+    "body-parser": "^2.2.0",
+    "cors": "^2.8.5",
+    "express": "^5.1.0",
+    "express-session": "^1.18.2",
+    "multer": "^2.0.2"
+  }
+}

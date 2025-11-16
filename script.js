@@ -12,6 +12,7 @@ document.addEventListener('DOMContentLoaded', function() {
     initSmoothScroll();
     initUnifiedScrollSystem(); // Novo sistema unificado
     initScrollIndicator();
+    initLightbox(); // Inicializa o lightbox
     
     // Inicializa YouTube se a API já estiver carregada
     if (window.YT && window.YT.Player) {
@@ -31,17 +32,9 @@ function createYouTubePlayer() {
         youtubePlayer = new YT.Player('youtube-player', {
             videoId: 'VzvOj_QrcVU', // ID do vídeo do YouTube
             playerVars: {
-                autoplay: 1,          // Reproduz automaticamente
-                mute: 1,             // Inicia mutado (necessário para autoplay)
-                loop: 1,             // Repete em loop
-                controls: 0,         // Remove controles
-                showinfo: 0,         // Remove informações
-                rel: 0,              // Remove vídeos relacionados
-                iv_load_policy: 3,   // Remove anotações
-                modestbranding: 1,   // Remove logo do YouTube
-                playsinline: 1,      // Para mobile
-                start: 0,            // Inicia do começo
-                playlist: 'VzvOj_QrcVU' // Necessário para loop funcionar
+                autoplay: 1, mute: 1, loop: 1, controls: 0, showinfo: 0,
+                rel: 0, iv_load_policy: 3, modestbranding: 1,
+                playsinline: 1, start: 0, playlist: 'VzvOj_QrcVU'
             },
             events: {
                 onReady: onPlayerReady,
@@ -55,104 +48,56 @@ function createYouTubePlayer() {
     }
 }
 
-// Quando o player está pronto
 function onPlayerReady(event) {
-    console.log('YouTube player pronto');
     event.target.playVideo();
-    
-    // Esconde o fallback
     const fallback = document.getElementById('fallback-bg');
-    if (fallback) {
-        fallback.style.display = 'none';
-    }
-    
-    // Aplica estilos adicionais ao iframe
+    if (fallback) fallback.style.display = 'none';
     const iframe = document.querySelector('#youtube-player iframe');
     if (iframe) {
-        iframe.style.pointerEvents = 'none';
-        iframe.style.position = 'absolute';
-        iframe.style.top = '0';
-        iframe.style.left = '0';
-        iframe.style.width = '100%';
-        iframe.style.height = '100%';
+        Object.assign(iframe.style, {
+            pointerEvents: 'none', position: 'absolute', top: '0',
+            left: '0', width: '100%', height: '100%'
+        });
     }
 }
 
-// Controla mudanças de estado do vídeo
 function onPlayerStateChange(event) {
-    // Se o vídeo parar, reinicia
-    if (event.data === YT.PlayerState.ENDED) {
-        event.target.playVideo();
-    }
-    
-    // Se pausar, continua
-    if (event.data === YT.PlayerState.PAUSED) {
+    if (event.data === YT.PlayerState.ENDED || event.data === YT.PlayerState.PAUSED) {
         event.target.playVideo();
     }
 }
 
-// Se houver erro, mostra fallback
 function onPlayerError(event) {
     console.log('Erro no YouTube player:', event.data);
     showFallbackBackground();
 }
 
-// Mostra background de fallback
 function showFallbackBackground() {
     const fallback = document.getElementById('fallback-bg');
     const youtubeContainer = document.getElementById('youtube-player');
-    
-    if (fallback) {
-        fallback.style.display = 'block';
-    }
-    
-    if (youtubeContainer) {
-        youtubeContainer.style.display = 'none';
-    }
+    if (fallback) fallback.style.display = 'block';
+    if (youtubeContainer) youtubeContainer.style.display = 'none';
 }
 
-// Função para ser chamada globalmente quando a API carregar
 window.onYouTubeIframeAPIReady = onYouTubeIframeAPIReady;
 
-// Funcionalidade do Menu Mobile
 function initNavbar() {
     const hamburger = document.getElementById('hamburger');
     const navMenu = document.getElementById('nav-menu');
     const navLinks = document.querySelectorAll('.nav-menu a');
 
-    // Toggle do menu mobile
     hamburger.addEventListener('click', function() {
         hamburger.classList.toggle('active');
         navMenu.classList.toggle('active');
-        
-        // Animação do hamburger
-        const spans = hamburger.querySelectorAll('span');
-        if (hamburger.classList.contains('active')) {
-            spans[0].style.transform = 'rotate(45deg) translate(5px, 5px)';
-            spans[1].style.opacity = '0';
-            spans[2].style.transform = 'rotate(-45deg) translate(7px, -6px)';
-        } else {
-            spans[0].style.transform = 'none';
-            spans[1].style.opacity = '1';
-            spans[2].style.transform = 'none';
-        }
     });
 
-    // Fecha menu ao clicar em um link
     navLinks.forEach(link => {
-        link.addEventListener('click', function() {
+        link.addEventListener('click', () => {
             hamburger.classList.remove('active');
             navMenu.classList.remove('active');
-            
-            // Reset hamburger animation
-            const spans = hamburger.querySelectorAll('span');
-            spans[0].style.transform = 'none';
-            spans[1].style.opacity = '1';
-            spans[2].style.transform = 'none';
         });
     });
 
-    // Fecha menu ao clicar fora
     document.addEventListener('click', function(e) {
         if (!hamburger.contains(e.target) && !navMenu.contains(e.target)) {
             hamburger.classList.remove('active');
@@ -161,421 +106,230 @@ function initNavbar() {
     });
 }
 
-// Funcionalidade do Header com scroll (movido para o sistema unificado)
-function initHeaderScroll() {
-    // Header scroll agora é gerenciado pelo sistema unificado
-}
-
-// Funcionalidade do Portfólio Moderno
 function initPortfolioFilter() {
-    // Dados dos projetos
-    const projects = [
-        {
-            id: 0,
-            title: "Vídeo Institucional - Tech Corp",
-            category: "Corporativo",
-            description: "Produção completa de vídeo institucional para empresa de tecnologia, incluindo roteiro, filmagem e pós-produção. O projeto destacou os valores da empresa e sua missão no mercado.",
-            client: "Tech Corporation",
-            year: "2024",
-            duration: "2:30",
-            videoId: "sample1" // Aqui você colocará o ID real do vídeo
-        },
-        {
-            id: 1,
-            title: "Campanha Digital - Fashion Brand",
-            category: "Marketing",
-            description: "Campanha publicitária completa para marca de moda, com conceito criativo inovador e execução impecável. Incluiu direção de arte, filmagem e pós-produção.",
-            client: "Fashion Brand",
-            year: "2024",
-            duration: "1:45",
-            videoId: "sample2"
-        },
-        {
-            id: 2,
-            title: "Cobertura - Evento Empresarial",
-            category: "Eventos",
-            description: "Cobertura audiovisual completa de evento corporativo, capturando os momentos mais importantes e criando uma narrativa envolvente para a empresa.",
-            client: "Evento Corp",
-            year: "2024",
-            duration: "3:15",
-            videoId: "sample3"
-        },
-        {
-            id: 3,
-            title: "Treinamento Interno - StartUp",
-            category: "Corporativo",
-            description: "Série de vídeos educativos para treinamento interno de startup, com linguagem clara e didática para facilitar o aprendizado dos colaboradores.",
-            client: "StartUp Innovation",
-            year: "2023",
-            duration: "4:20",
-            videoId: "sample4"
-        },
-        {
-            id: 4,
-            title: "Social Media - Restaurante",
-            category: "Marketing",
-            description: "Produção de conteúdo para redes sociais de restaurante gourmet, destacando pratos especiais e criando conexão emocional com o público.",
-            client: "Restaurante Gourmet",
-            year: "2023",
-            duration: "0:45",
-            videoId: "sample5"
-        },
-        {
-            id: 5,
-            title: "Casamento - Villa Exclusive",
-            category: "Eventos",
-            description: "Filmagem completa de casamento em villa exclusiva, capturando momentos únicos e emocionantes para criar uma lembrança eterna para o casal.",
-            client: "Villa Exclusive",
-            year: "2024",
-            duration: "5:30",
-            videoId: "sample6"
+    const feedContainer = document.getElementById('portfolio-feed');
+    if (!feedContainer) return;
+
+    let projectsData = [];
+
+    async function loadProjects() {
+        try {
+            const response = await fetch(`portfolio.json?v=${Date.now()}`);
+            if (!response.ok) throw new Error(`HTTP error! status: ${response.status}`);
+            projectsData = await response.json();
+            renderProjects(projectsData);
+        } catch (error) {
+            console.error("Não foi possível carregar os projetos:", error);
+            feedContainer.innerHTML = '<p style="text-align: center; color: var(--text-light);">Erro ao carregar o portfólio.</p>';
         }
-    ];
-
-    let currentProjectIndex = 0;
-    let autoPlayInterval;
-    let isAutoPlaying = true;
-
-    // Elementos do DOM
-    const currentCategory = document.getElementById('current-category');
-    const currentProject = document.getElementById('current-project');
-    const totalProjects = document.getElementById('total-projects');
-    const projectTitle = document.getElementById('project-title');
-    const projectDescription = document.getElementById('project-description');
-    const portfolioPlayer = document.getElementById('portfolio-player');
-    const prevBtn = document.getElementById('prev-project');
-    const nextBtn = document.getElementById('next-project');
-    const thumbnails = document.querySelectorAll('.thumbnail-item');
-
-    // Inicialização
-    if (totalProjects) {
-        totalProjects.textContent = projects.length.toString().padStart(2, '0');
-        updateProject(0);
-        startAutoPlay();
     }
 
-    // Função para iniciar auto-play
-    function startAutoPlay() {
-        if (autoPlayInterval) clearInterval(autoPlayInterval);
-        
-        autoPlayInterval = setInterval(() => {
-            if (isAutoPlaying) {
-                const nextIndex = (currentProjectIndex + 1) % projects.length;
-                updateProject(nextIndex);
+    function renderProjects(projects) {
+        feedContainer.innerHTML = projects.length === 0 ? '<p style="text-align: center; color: var(--text-light);">Nenhum projeto encontrado.</p>' : '';
+        projects.forEach((project, index) => {
+            const projectCard = document.createElement('div');
+            projectCard.className = 'project-card-feed';
+            projectCard.dataset.index = index;
+
+            const mediaItems = [];
+            // Adiciona imagens
+            if (project.imageUrls && Array.isArray(project.imageUrls)) {
+                project.imageUrls.forEach(url => mediaItems.push({ type: 'image', url }));
             }
-        }, 5000); // 5 segundos
-    }
-
-    // Função para parar auto-play
-    function stopAutoPlay() {
-        if (autoPlayInterval) {
-            clearInterval(autoPlayInterval);
-        }
-    }
-
-    // Função para reiniciar auto-play
-    function restartAutoPlay() {
-        stopAutoPlay();
-        startAutoPlay();
-    }
-
-    // Função para atualizar projeto
-    function updateProject(index) {
-        if (index < 0 || index >= projects.length) return;
-
-        const project = projects[index];
-        currentProjectIndex = index;
-
-        // Adiciona animação de saída
-        const infoElements = document.querySelector('.portfolio-info');
-        if (infoElements) {
-            infoElements.classList.add('portfolio-fade');
-        }
-
-        setTimeout(() => {
-            // Atualiza conteúdo
-            if (currentCategory) currentCategory.textContent = project.category;
-            if (currentProject) currentProject.textContent = (index + 1).toString().padStart(2, '0');
-            if (projectTitle) projectTitle.textContent = project.title;
-            if (projectDescription) projectDescription.textContent = project.description;
-
-            // Atualiza thumbnails
-            thumbnails.forEach((thumb, i) => {
-                if (i === index) {
-                    thumb.classList.add('active');
-                } else {
-                    thumb.classList.remove('active');
+            // Adiciona vídeo
+            if (project.videoId) {
+                const videoIdMatch = project.videoId.match(/(?:embed\/|v=)([\w-]{11})/);
+                if (videoIdMatch && videoIdMatch[1]) {
+                    const videoId = videoIdMatch[1];
+                    mediaItems.push({
+                        type: 'video',
+                        embedUrl: `https://www.youtube.com/embed/${videoId}`,
+                        thumbnailUrl: `https://img.youtube.com/vi/${videoId}/hqdefault.jpg`
+                    });
                 }
-            });
-
-            // Atualiza estado dos botões
-            if (prevBtn) prevBtn.disabled = index === 0;
-            if (nextBtn) nextBtn.disabled = index === projects.length - 1;
-
-            // Simula loading do vídeo
-            if (portfolioPlayer) {
-                portfolioPlayer.classList.add('video-loading');
-                setTimeout(() => {
-                    portfolioPlayer.classList.remove('video-loading');
-                }, 800);
             }
 
-            // Remove animação de saída e adiciona de entrada
-            if (infoElements) {
-                infoElements.classList.remove('portfolio-fade');
-                infoElements.classList.add('active');
+            let mediaHtml = '';
+            if (mediaItems.length > 1) { // Carrossel
+                mediaHtml = `
+                    <div class="carousel-slides">
+                        ${mediaItems.map((item, i) => `
+                            <div class="carousel-slide ${i === 0 ? 'active' : ''}" data-media-type="${item.type}" data-embed-url="${item.embedUrl || ''}">
+                                <img src="${item.type === 'image' ? item.url : item.thumbnailUrl}" alt="${project.title} - Mídia ${i + 1}">
+                                ${item.type === 'video' ? '<div class="play-overlay"><i class="fas fa-play"></i></div>' : ''}
+                            </div>
+                        `).join('')}
+                    </div>
+                    <button class="carousel-btn prev">&lt;</button>
+                    <button class="carousel-btn next">&gt;</button>
+                    <div class="carousel-dots">
+                        ${mediaItems.map((_, i) => `<span class="dot ${i === 0 ? 'active' : ''}" data-slide="${i}"></span>`).join('')}
+                    </div>`;
+            } else if (mediaItems.length === 1) { // Mídia única
+                const item = mediaItems[0];
+                mediaHtml = `
+                    <div class="carousel-slide active" data-media-type="${item.type}" data-embed-url="${item.embedUrl || ''}">
+                        <img src="${item.type === 'image' ? item.url : item.thumbnailUrl}" alt="${project.title}">
+                        ${item.type === 'video' ? '<div class="play-overlay"><i class="fas fa-play"></i></div>' : ''}
+                    </div>`;
             }
-        }, 250);
+
+            projectCard.innerHTML = `
+                <div class="project-card-header">
+                    <div class="project-card-avatar"><img src="assets/img/logo-S-c5.png" alt="Da Mata Produtora"></div>
+                    <div class="project-card-user"><h4>Da Mata Produtora</h4><span>${project.client}</span></div>
+                </div>
+                <div class="project-card-media">${mediaHtml}</div>
+                <div class="project-card-body">
+                    <div class="project-card-info">
+                        <p><strong>${project.title}</strong><span class="category-tag">${project.category}</span></p>
+                        <p>${project.description}</p>
+                    </div>
+                </div>`;
+            feedContainer.appendChild(projectCard);
+        });
+        initializeCarousels(feedContainer);
     }
-
-    // Event Listeners para navegação
-    if (prevBtn) {
-        prevBtn.addEventListener('click', () => {
-            if (currentProjectIndex > 0) {
-                updateProject(currentProjectIndex - 1);
-                restartAutoPlay(); // Reinicia o timer após interação manual
-            }
-        });
-    }
-
-    if (nextBtn) {
-        nextBtn.addEventListener('click', () => {
-            if (currentProjectIndex < projects.length - 1) {
-                updateProject(currentProjectIndex + 1);
-                restartAutoPlay(); // Reinicia o timer após interação manual
-            }
-        });
-    }
-
-    // Event Listeners para thumbnails
-    thumbnails.forEach((thumb, index) => {
-        thumb.addEventListener('click', () => {
-            updateProject(index);
-            restartAutoPlay(); // Reinicia o timer após interação manual
-        });
-    });
-
-    // Event Listener para o player principal
-    if (portfolioPlayer) {
-        portfolioPlayer.addEventListener('click', () => {
-            // Aqui você pode integrar com um player de vídeo real
-            // Por enquanto, vamos simular o carregamento
-            portfolioPlayer.classList.add('video-loading');
-            
-            setTimeout(() => {
-                portfolioPlayer.classList.remove('video-loading');
-                showNotification(`Reproduzindo: ${projects[currentProjectIndex].title}`, 'info');
-            }, 1500);
-        });
-    }
-
-    // Navegação por teclado
-    document.addEventListener('keydown', (e) => {
-        if (e.key === 'ArrowLeft' && currentProjectIndex > 0) {
-            updateProject(currentProjectIndex - 1);
-            restartAutoPlay(); // Reinicia o timer após interação manual
-        } else if (e.key === 'ArrowRight' && currentProjectIndex < projects.length - 1) {
-            updateProject(currentProjectIndex + 1);
-            restartAutoPlay(); // Reinicia o timer após interação manual
-        }
-    });
-
-    // Pausar auto-play quando hover na seção do portfólio
-    const portfolioSection = document.querySelector('.portfolio-showcase');
-    if (portfolioSection) {
-        portfolioSection.addEventListener('mouseenter', () => {
-            isAutoPlaying = false;
-        });
-
-        portfolioSection.addEventListener('mouseleave', () => {
-            isAutoPlaying = true;
-        });
-    }
+    
+    window.getProjectsData = () => projectsData;
+    loadProjects();
 }
 
-// Funcionalidade do Formulário de Contato
-function initContactForm() {
-    const form = document.getElementById('contact-form');
-    
-    form.addEventListener('submit', function(e) {
-        e.preventDefault();
-        
-        // Coleta os dados do formulário
-        const formData = {
-            name: document.getElementById('name').value,
-            email: document.getElementById('email').value,
-            subject: document.getElementById('subject').value,
-            message: document.getElementById('message').value
+function initializeCarousels(context = document) {
+    const carousels = context.querySelectorAll('.project-card-media, .lightbox-content');
+    carousels.forEach(carousel => {
+        const slides = carousel.querySelectorAll('.carousel-slide');
+        if (slides.length <= 1) return;
+        const dots = carousel.querySelectorAll('.dot');
+        const prevBtn = carousel.querySelector('.carousel-btn.prev');
+        const nextBtn = carousel.querySelector('.carousel-btn.next');
+        let currentIndex = 0;
+
+        const showSlide = (index) => {
+            slides.forEach((slide, i) => slide.classList.toggle('active', i === index));
+            if(dots.length > 0) {
+                dots.forEach((dot, i) => dot.classList.toggle('active', i === index));
+            }
+            currentIndex = index;
         };
 
-        // Validação básica
-        if (!validateForm(formData)) {
-            return;
+        if(prevBtn && nextBtn) {
+            prevBtn.addEventListener('click', e => { e.stopPropagation(); showSlide((currentIndex - 1 + slides.length) % slides.length); });
+            nextBtn.addEventListener('click', e => { e.stopPropagation(); showSlide((currentIndex + 1) % slides.length); });
         }
+        if(dots) {
+            dots.forEach(dot => dot.addEventListener('click', e => { e.stopPropagation(); showSlide(parseInt(e.target.dataset.slide, 10)); }));
+        }
+    });
+}
 
-        // Simula envio do formulário
-        const submitBtn = form.querySelector('.btn');
-        const originalText = submitBtn.textContent;
+function initLightbox() {
+    const lightbox = document.getElementById('lightbox');
+    if (!lightbox) return;
+    const lightboxContent = lightbox.querySelector('.lightbox-content');
+    const closeBtn = lightbox.querySelector('.lightbox-close');
+    const feedContainer = document.getElementById('portfolio-feed');
+
+    feedContainer.addEventListener('click', (e) => {
+        const card = e.target.closest('.project-card-feed');
+        if (!card) return;
+        const mediaContainer = card.querySelector('.project-card-media');
+        // Impede a abertura do lightbox se o clique for nos botões do carrossel
+        if (!mediaContainer.contains(e.target) || e.target.matches('button.carousel-btn, .dot')) return;
+
+        lightboxContent.innerHTML = '';
+        const mediaClone = mediaContainer.cloneNode(true);
+        lightboxContent.appendChild(mediaClone);
+        initializeCarousels(lightboxContent);
         
-        // Loading state
-        submitBtn.textContent = 'Enviando...';
-        submitBtn.disabled = true;
-        submitBtn.style.opacity = '0.7';
+        lightbox.classList.add('visible');
+        document.body.classList.add('lightbox-active');
+    });
 
-        // Simula delay de envio
+    // Adiciona o listener para tocar o vídeo DENTRO do lightbox
+    lightboxContent.addEventListener('click', (e) => {
+        const slide = e.target.closest('.carousel-slide');
+        if (slide && slide.dataset.mediaType === 'video') {
+            const embedUrl = slide.dataset.embedUrl;
+            if (embedUrl) {
+                // Substitui o conteúdo do slide pelo iframe
+                slide.innerHTML = `<iframe src="${embedUrl}?autoplay=1&rel=0&modestbranding=1" frameborder="0" allow="autoplay; fullscreen; picture-in-picture" allowfullscreen style="width:100%; height:100%;"></iframe>`;
+            }
+        }
+    });
+
+    const closeLightbox = () => {
+        lightbox.classList.remove('visible');
+        document.body.classList.remove('lightbox-active');
+        lightboxContent.innerHTML = ''; // Limpa o conteúdo para parar vídeos e remover clones
+    };
+
+    closeBtn.addEventListener('click', closeLightbox);
+    lightbox.addEventListener('click', e => { if (e.target === lightbox) closeLightbox(); });
+}
+
+function initContactForm() {
+    const form = document.getElementById('contact-form');
+    if (!form) return;
+    form.addEventListener('submit', function(e) {
+        e.preventDefault();
+        const formData = { name: form.name.value, email: form.email.value, subject: form.subject.value, message: form.message.value };
+        if (!validateForm(formData)) return;
+        const submitBtn = form.querySelector('.btn');
+        submitBtn.textContent = 'Enviando...'; submitBtn.disabled = true;
         setTimeout(() => {
-            // Sucesso
-            submitBtn.textContent = 'Mensagem Enviada! ✓';
-            submitBtn.style.background = '#28a745';
-            
-            // Reset form
+            submitBtn.textContent = 'Mensagem Enviada! ✓'; submitBtn.style.background = '#28a745';
             form.reset();
-            
-            // Show success message
-            showNotification('Mensagem enviada com sucesso! Entraremos em contato em breve.', 'success');
-            
-            // Reset button after 3 seconds
+            showNotification('Mensagem enviada com sucesso!', 'success');
             setTimeout(() => {
-                submitBtn.textContent = originalText;
-                submitBtn.disabled = false;
-                submitBtn.style.opacity = '1';
+                submitBtn.textContent = 'Enviar Mensagem'; submitBtn.disabled = false;
                 submitBtn.style.background = '';
             }, 3000);
-            
         }, 2000);
     });
 }
 
-// Validação do formulário
 function validateForm(data) {
-    const errors = [];
-
-    if (!data.name.trim()) {
-        errors.push('Nome é obrigatório');
-    }
-
-    if (!data.email.trim()) {
-        errors.push('Email é obrigatório');
-    } else if (!isValidEmail(data.email)) {
-        errors.push('Email inválido');
-    }
-
-    if (!data.subject.trim()) {
-        errors.push('Assunto é obrigatório');
-    }
-
-    if (!data.message.trim()) {
-        errors.push('Mensagem é obrigatória');
-    }
-
-    if (errors.length > 0) {
-        showNotification(errors.join(', '), 'error');
+    if (!data.name.trim() || !data.email.trim() || !data.subject.trim() || !data.message.trim()) {
+        showNotification('Todos os campos são obrigatórios.', 'error');
         return false;
     }
-
+    if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(data.email)) {
+        showNotification('Email inválido.', 'error');
+        return false;
+    }
     return true;
 }
 
-// Validação de email
-function isValidEmail(email) {
-    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-    return emailRegex.test(email);
-}
-
-// Sistema de notificações
 function showNotification(message, type = 'info') {
-    // Remove notificação existente se houver
-    const existingNotification = document.querySelector('.notification');
-    if (existingNotification) {
-        existingNotification.remove();
-    }
-
-    // Cria nova notificação
+    const existing = document.querySelector('.notification');
+    if (existing) existing.remove();
     const notification = document.createElement('div');
     notification.className = `notification notification-${type}`;
-    notification.innerHTML = `
-        <div class="notification-content">
-            <span class="notification-message">${message}</span>
-            <button class="notification-close">&times;</button>
-        </div>
-    `;
-
-    // Adiciona estilos
-    notification.style.cssText = `
-        position: fixed;
-        top: 100px;
-        right: 20px;
-        background: ${type === 'success' ? '#28a745' : type === 'error' ? '#dc3545' : '#007bff'};
-        color: white;
-        padding: 1rem 1.5rem;
-        border-radius: 8px;
-        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
-        z-index: 10000;
-        max-width: 400px;
-        transform: translateX(100%);
-        transition: transform 0.3s ease;
-    `;
-
-    notification.querySelector('.notification-content').style.cssText = `
-        display: flex;
-        align-items: center;
-        justify-content: space-between;
-        gap: 1rem;
-    `;
-
-    notification.querySelector('.notification-close').style.cssText = `
-        background: none;
-        border: none;
-        color: white;
-        font-size: 1.5rem;
-        cursor: pointer;
-        padding: 0;
-        width: 24px;
-        height: 24px;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-    `;
-
+    notification.innerHTML = `<div class="notification-content"><span>${message}</span><button class="notification-close">&times;</button></div>`;
+    Object.assign(notification.style, {
+        position: 'fixed', top: '100px', right: '20px',
+        background: type === 'success' ? '#28a745' : type === 'error' ? '#dc3545' : '#007bff',
+        color: 'white', padding: '1rem 1.5rem', borderRadius: '8px',
+        boxShadow: '0 4px 12px rgba(0,0,0,0.15)', zIndex: '10000',
+        transform: 'translateX(100%)', transition: 'transform 0.3s ease'
+    });
     document.body.appendChild(notification);
-
-    // Animação de entrada
-    setTimeout(() => {
-        notification.style.transform = 'translateX(0)';
-    }, 100);
-
-    // Auto remove após 5 segundos
-    const autoRemove = setTimeout(() => {
-        removeNotification(notification);
-    }, 5000);
-
-    // Remove ao clicar no X
+    setTimeout(() => { notification.style.transform = 'translateX(0)'; }, 100);
+    const autoRemove = setTimeout(() => removeNotification(notification), 5000);
     notification.querySelector('.notification-close').addEventListener('click', () => {
         clearTimeout(autoRemove);
         removeNotification(notification);
     });
 }
 
-// Remove notificação
 function removeNotification(notification) {
     notification.style.transform = 'translateX(100%)';
-    setTimeout(() => {
-        if (notification.parentNode) {
-            notification.remove();
-        }
-    }, 300);
+    setTimeout(() => { if (notification.parentNode) notification.remove(); }, 300);
 }
 
-// Animações de scroll
 function initScrollAnimations() {
-    const animatedElements = document.querySelectorAll('.service-card, .portfolio-item, .stat-item');
-    
-    // Adiciona classe para animação
-    animatedElements.forEach(el => {
-        el.classList.add('scroll-animate');
-    });
-
-    // Observer para detectar elementos na tela
+    const animatedElements = document.querySelectorAll('.service-card, .stat-item');
     const observer = new IntersectionObserver((entries) => {
         entries.forEach(entry => {
             if (entry.isIntersecting) {
@@ -583,309 +337,67 @@ function initScrollAnimations() {
                 observer.unobserve(entry.target);
             }
         });
-    }, {
-        threshold: 0.1,
-        rootMargin: '0px 0px -50px 0px'
-    });
-
+    }, { threshold: 0.1, rootMargin: '0px 0px -50px 0px' });
     animatedElements.forEach(el => {
+        el.classList.add('scroll-animate');
         observer.observe(el);
     });
 }
 
-// Smooth scroll para links de navegação
 function initSmoothScroll() {
-    const navLinks = document.querySelectorAll('a[href^="#"]');
-    
-    navLinks.forEach(link => {
+    document.querySelectorAll('a[href^="#"]').forEach(link => {
         link.addEventListener('click', function(e) {
             e.preventDefault();
-            
-            const targetId = this.getAttribute('href');
-            const targetSection = document.querySelector(targetId);
-            
+            const targetSection = document.querySelector(this.getAttribute('href'));
             if (targetSection) {
                 const headerHeight = document.querySelector('.header').offsetHeight;
-                const targetPosition = targetSection.offsetTop - headerHeight - 20;
-                
-                window.scrollTo({
-                    top: targetPosition,
-                    behavior: 'smooth'
-                });
+                window.scrollTo({ top: targetSection.offsetTop - headerHeight - 20, behavior: 'smooth' });
             }
         });
     });
 }
-
-// Parallax effect movido para o sistema unificado
-
-// Contador animado para estatísticas
-function initCounters() {
-    const counters = document.querySelectorAll('.stat-item h3');
-    
-    const observer = new IntersectionObserver((entries) => {
-        entries.forEach(entry => {
-            if (entry.isIntersecting) {
-                const counter = entry.target;
-                const finalNumber = parseInt(counter.textContent);
-                const increment = finalNumber / 100;
-                let currentNumber = 0;
-                
-                const updateCounter = () => {
-                    currentNumber += increment;
-                    if (currentNumber < finalNumber) {
-                        counter.textContent = Math.floor(currentNumber) + (counter.textContent.includes('+') ? '+' : '');
-                        requestAnimationFrame(updateCounter);
-                    } else {
-                        counter.textContent = finalNumber + (counter.textContent.includes('+') ? '+' : '');
-                    }
-                };
-                
-                updateCounter();
-                observer.unobserve(counter);
-            }
-        });
-    }, { threshold: 0.7 });
-    
-    counters.forEach(counter => {
-        observer.observe(counter);
-    });
-}
-
-// Funcionalidade do player de vídeo (placeholder)
-function initVideoPlayer() {
-    const videoPlaceholder = document.querySelector('.video-placeholder');
-    
-    if (videoPlaceholder) {
-        videoPlaceholder.addEventListener('click', function() {
-            // Aqui você pode integrar com um player de vídeo real
-            // Por enquanto, vamos simular o carregamento
-            this.innerHTML = '<i class="fas fa-spinner fa-spin"></i><span>Carregando...</span>';
-            
-            setTimeout(() => {
-                showNotification('Player de vídeo será implementado em breve!', 'info');
-                this.innerHTML = '<i class="fas fa-play"></i><span>Assista nosso showreel</span>';
-            }, 2000);
-        });
-    }
-}
-
-// Lazy loading para imagens
-function initLazyLoading() {
-    const images = document.querySelectorAll('img[data-src]');
-    
-    const imageObserver = new IntersectionObserver((entries, observer) => {
-        entries.forEach(entry => {
-            if (entry.isIntersecting) {
-                const img = entry.target;
-                img.src = img.dataset.src;
-                img.classList.remove('lazy');
-                imageObserver.unobserve(img);
-            }
-        });
-    });
-    
-    images.forEach(img => imageObserver.observe(img));
-}
-
-// Detecta modo escuro do sistema
-function initDarkModeDetection() {
-    if (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) {
-        // Usuário prefere modo escuro
-        document.body.classList.add('dark-mode-preferred');
-    }
-}
-
-// Inicialização de funcionalidades extras
-setTimeout(() => {
-    initParallaxEffect();
-    initCounters();
-    initVideoPlayer();
-    initLazyLoading();
-    initDarkModeDetection();
-}, 1000);
-
-// Utilitários
-const utils = {
-    // Debounce function
-    debounce: (func, wait) => {
-        let timeout;
-        return function executedFunction(...args) {
-            const later = () => {
-                clearTimeout(timeout);
-                func(...args);
-            };
-            clearTimeout(timeout);
-            timeout = setTimeout(later, wait);
-        };
-    },
-    
-    // Throttle function
-    throttle: (func, limit) => {
-        let inThrottle;
-        return function(...args) {
-            if (!inThrottle) {
-                func.apply(this, args);
-                inThrottle = true;
-                setTimeout(() => inThrottle = false, limit);
-            }
-        };
-    },
-    
-    // Format phone number
-    formatPhone: (phone) => {
-        return phone.replace(/\D/g, '').replace(/(\d{2})(\d{5})(\d{4})/, '($1) $2-$3');
-    }
-};
-
-// Sistema de Scroll Unificado e Otimizado
-let lastScrollTime = 0;
-let lastScroll = 0;
-let ticking = false;
 
 function initUnifiedScrollSystem() {
     const header = document.querySelector('.header');
-    const heroTop = document.querySelector('.hero-top');
-    const heroBottom = document.querySelector('.hero-bottom');
-    const videoOverlay = document.querySelector('.video-overlay');
     const hero = document.querySelector('.hero');
-    
-    function updateScroll() {
-        const currentTime = performance.now();
+    if (!header || !hero) return;
+    let lastScroll = 0;
+    window.addEventListener('scroll', () => {
         const currentScroll = window.pageYOffset;
-        const heroHeight = hero ? hero.offsetHeight : 0;
-        const scrollPercent = heroHeight > 0 ? Math.min(currentScroll / (heroHeight * 0.8), 1) : 0;
-        
-        // Throttle para 60fps
-        if (currentTime - lastScrollTime < 16) {
-            ticking = false;
-            requestAnimationFrame(updateScroll);
-            return;
+        if (currentScroll > 100) {
+            header.style.background = 'rgba(13, 13, 13, 0.98)';
+            header.style.boxShadow = '0 2px 20px rgba(0, 0, 0, 0.1)';
+        } else {
+            header.style.background = 'rgba(13, 13, 13, 0.95)';
+            header.style.boxShadow = 'none';
         }
-        
-        // Header effects
-        if (header) {
-            if (currentScroll > 100) {
-                header.style.background = 'rgba(255, 255, 255, 0.98)';
-                header.style.boxShadow = '0 2px 20px rgba(0, 0, 0, 0.1)';
-            } else {
-                header.style.background = 'rgba(255, 255, 255, 0.95)';
-                header.style.boxShadow = 'none';
-            }
-
-            // Hide/show header com hysteresis para evitar flicker
-            const threshold = 200;
-            const hysteresis = 20;
-            
-            if (currentScroll > lastScroll + hysteresis && currentScroll > threshold) {
-                header.style.transform = 'translateY(-100%)';
-            } else if (currentScroll < lastScroll - hysteresis) {
-                header.style.transform = 'translateY(0)';
-            }
+        if (currentScroll > lastScroll && currentScroll > 200) {
+            header.style.transform = 'translateY(-100%)';
+        } else {
+            header.style.transform = 'translateY(0)';
         }
-        
-        // Hero effects (apenas se os elementos existirem e estiver na área do hero)
-        if (heroTop && heroBottom && videoOverlay && currentScroll < heroHeight * 1.2) {
-            const scale = Math.max(0.7, 1 - (scrollPercent * 0.25)); // Redução mais suave
-            const opacity = Math.max(0.4, 1 - (scrollPercent * 0.4)); // Redução mais suave
-            
-            // Aplica transformações de forma mais suave e eficiente
-            const translateY = currentScroll * 0.15; // Parallax mais suave
-            heroTop.style.transform = `translate3d(0, ${translateY}px, 0) scale(${scale})`;
-            heroTop.style.opacity = opacity;
-            
-            // Overlay com transição mais suave
-            const overlayOpacity1 = Math.min(0.35, 0.25 + scrollPercent * 0.08);
-            const overlayOpacity2 = Math.min(0.45, 0.35 + scrollPercent * 0.08);
-            videoOverlay.style.background = `linear-gradient(135deg, 
-                rgba(255, 107, 53, ${overlayOpacity1}) 0%, 
-                rgba(44, 62, 80, ${overlayOpacity2}) 100%)`;
-            
-            // Move o bottom content de forma mais suave
-            if (scrollPercent > 0.6) {
-                const bottomTransform = (scrollPercent - 0.6) * 2.5; // Início mais tardio
-                heroBottom.style.transform = `translate3d(0, ${-bottomTransform * 25}px, 0)`;
-            } else {
-                heroBottom.style.transform = 'translate3d(0, 0, 0)';
-            }
-        }
-        
         lastScroll = currentScroll;
-        lastScrollTime = currentTime;
-        ticking = false;
-    }
-    
-    function requestScrollUpdate() {
-        if (!ticking) {
-            requestAnimationFrame(updateScroll);
-            ticking = true;
-        }
-    }
-    
-    // Um único listener otimizado com passive para melhor performance
-    window.addEventListener('scroll', requestScrollUpdate, { passive: true });
+    }, { passive: true });
 }
 
-// Event listeners para performance otimizada (removido o listener vazio)
-window.addEventListener('resize', utils.debounce(() => {
-    // Resize events otimizados
-}, 250));
-
-// Funcionalidade do Scroll Indicator
 function initScrollIndicator() {
     const scrollIndicator = document.querySelector('.scroll-indicator');
     const heroSection = document.querySelector('.hero');
-    
-    if (scrollIndicator && heroSection) {
-        scrollIndicator.addEventListener('click', function() {
-            const servicesSection = document.querySelector('#services');
-            if (servicesSection) {
-                const headerHeight = document.querySelector('.header').offsetHeight;
-                const targetPosition = servicesSection.offsetTop - headerHeight - 20;
-                
-                window.scrollTo({
-                    top: targetPosition,
-                    behavior: 'smooth'
-                });
-            }
-        });
-        
-        // Hide scroll indicator quando sair da hero section
-        const observer = new IntersectionObserver((entries) => {
-            entries.forEach(entry => {
-                if (entry.isIntersecting) {
-                    scrollIndicator.style.opacity = '1';
-                    scrollIndicator.style.visibility = 'visible';
-                } else {
-                    scrollIndicator.style.opacity = '0';
-                    scrollIndicator.style.visibility = 'hidden';
-                }
-            });
-        }, { threshold: 0.5 });
-        
-        observer.observe(heroSection);
-    }
-}
-
-// Efeitos especiais do Hero com scroll (movido para o sistema unificado)
-function initHeroScrollEffects() {
-    // Hero scroll agora é gerenciado pelo sistema unificado
-}
-
-// Adiciona classe loaded quando a página termina de carregar
-window.addEventListener('load', () => {
-    document.body.classList.add('loaded');
-});
-
-// Service Worker registration (opcional)
-if ('serviceWorker' in navigator) {
-    window.addEventListener('load', () => {
-        navigator.serviceWorker.register('/sw.js')
-            .then((registration) => {
-                console.log('SW registered: ', registration);
-            })
-            .catch((registrationError) => {
-                console.log('SW registration failed: ', registrationError);
-            });
+    if (!scrollIndicator || !heroSection) return;
+    scrollIndicator.addEventListener('click', () => {
+        const servicesSection = document.querySelector('#services');
+        if (servicesSection) {
+            const headerHeight = document.querySelector('.header').offsetHeight;
+            window.scrollTo({ top: servicesSection.offsetTop - headerHeight - 20, behavior: 'smooth' });
+        }
     });
+    const observer = new IntersectionObserver(entries => {
+        entries.forEach(entry => {
+            scrollIndicator.style.opacity = entry.isIntersecting ? '1' : '0';
+            scrollIndicator.style.visibility = entry.isIntersecting ? 'visible' : 'hidden';
+        });
+    }, { threshold: 0.5 });
+    observer.observe(heroSection);
 }
+
+window.addEventListener('load', () => document.body.classList.add('loaded'));
