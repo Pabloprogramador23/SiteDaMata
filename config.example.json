@@ -1,0 +1,5 @@
+{
+    "adminPasswordHash": "$2b$10$YourHashHere...",
+    "secretQuestion": "Qual o nome do seu primeiro animal de estimação?",
+    "secretAnswerHash": "$2b$10$YourAnswerHashHere..."
+}

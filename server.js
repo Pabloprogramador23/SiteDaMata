@@ -1,4 +1,7 @@
 const express = require('express');
+// Carrega variáveis de ambiente do arquivo .env
+require('dotenv').config();
+
 const bodyParser = require('body-parser');
 const cors = require('cors');
 const fs = require('fs');
@@ -8,11 +11,11 @@ const session = require('express-session');
 const bcrypt = require('bcrypt');
 
 const app = express();
-const port = 3000;
+const port = process.env.PORT || 3000;
 const CONFIG_PATH = 'config.json';
 
 // --- Configurações ---
-const SESSION_SECRET = 'super-secret-key-for-mata-produtora';
+const SESSION_SECRET = process.env.SESSION_SECRET;
 let config = {};
 
 // Carrega a configuração do arquivo
